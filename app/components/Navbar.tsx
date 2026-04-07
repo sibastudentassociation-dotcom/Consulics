@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FiMenu, FiX } from 'react-icons/fi';
 
@@ -14,9 +15,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-white tracking-tight">
-            <span className="text-growth-400">Consu</span>
-            <span className="text-white">lics</span>
+          <Link href="/" className="flex items-center gap-3 text-white">
+            <Image src="/logo/1.png" alt="Consulics logo" width={40} height={40} />
+            <span className="text-2xl font-bold tracking-tight">
+              <span className="text-growth-400">Consu</span>
+              <span className="text-white">lics</span>
+            </span>
           </Link>
 
           {/* Desktop Menu */}
@@ -97,7 +101,10 @@ export default function Navbar() {
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="block md:inline-block px-3 py-2 rounded hover:bg-gray-100 transition">
+    <Link
+      href={href}
+      className="block md:inline-block px-3 py-2 rounded text-white hover:bg-white/10 transition"
+    >
       {children}
     </Link>
   );
@@ -108,7 +115,7 @@ function NavDropdown({ title, children }: { title: string; children: React.React
 
   return (
     <div className="relative group">
-      <button className="px-3 py-2 rounded hover:bg-gray-100 transition flex items-center">
+      <button className="px-3 py-2 rounded text-white hover:bg-white/10 transition flex items-center">
         {title}
       </button>
       <div className="absolute left-0 mt-0 w-48 bg-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
