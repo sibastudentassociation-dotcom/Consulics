@@ -168,9 +168,9 @@ export default function AppointmentPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-dark mb-2">Appointment Date</label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative">
+                  <div className="relative z-10">
+                    <label className="block text-sm font-semibold text-dark mb-3">Appointment Date</label>
                     <Input
                       type="date"
                       min={new Date().toISOString().split('T')[0]}
@@ -179,16 +179,18 @@ export default function AppointmentPage() {
                       onChange={(event) => {
                         setSelectedDate(event.target.value);
                       }}
+                      className="w-full bg-white text-dark font-medium"
                     />
-                    {errors.appointmentDate && <p className="text-red-600 text-sm mt-1">{errors.appointmentDate.message}</p>}
+                    {errors.appointmentDate && <p className="text-red-600 text-sm mt-2">{errors.appointmentDate.message}</p>}
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-dark mb-2">Time Slot</label>
+                  <div className="relative z-30">
+                    <label className="block text-sm font-semibold text-dark mb-3">Time Slot</label>
                     <select
                       {...register('appointmentTime', { required: 'Appointment time is required' })}
-                      className="relative z-50 flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+                      className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-dark font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
+                      <option value="">Select a time slot</option>
                       {availableSlots.length ? (
                         availableSlots.map((slot) => (
                           <option key={slot} value={slot}>
@@ -201,22 +203,23 @@ export default function AppointmentPage() {
                         </option>
                       )}
                     </select>
-                    {errors.appointmentTime && <p className="text-red-600 text-sm mt-1">{errors.appointmentTime.message}</p>}
+                    {errors.appointmentTime && <p className="text-red-600 text-sm mt-2">{errors.appointmentTime.message}</p>}
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-dark mb-2">Service Type</label>
+                  <div className="relative z-20">
+                    <label className="block text-sm font-semibold text-dark mb-3">Service Type</label>
                     <select
                       {...register('serviceType', { required: 'Service type is required' })}
-                      className="flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+                      className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-dark font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
+                      <option value="">Select a service</option>
                       {serviceOptions.map((option) => (
                         <option key={option.value} value={option.value}>
                           {option.label}
                         </option>
                       ))}
                     </select>
-                    {errors.serviceType && <p className="text-red-600 text-sm mt-1">{errors.serviceType.message}</p>}
+                    {errors.serviceType && <p className="text-red-600 text-sm mt-2">{errors.serviceType.message}</p>}
                   </div>
                 </div>
 
