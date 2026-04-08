@@ -16,9 +16,12 @@ export async function middleware(request: NextRequest) {
   // API routes that require authentication should validate tokens in the route handlers.
   if (pathname.startsWith('/api/admin') || pathname.startsWith('/api/services') || pathname.startsWith('/api/projects')) {
     const authHeader = request.headers.get('authorization');
+    const session = request.cookies.get('session')?.value;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      if (!session) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
     }
   }
 

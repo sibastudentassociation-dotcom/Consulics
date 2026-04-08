@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { FiPhone, FiMail, FiMapPin } from 'react-icons/fi';
 import toast, { Toaster } from 'react-hot-toast';
@@ -20,7 +20,6 @@ interface ContactFormData {
 
 export default function ContactPage() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactFormData>();
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
   const onSubmit = async (data: ContactFormData) => {
     try {
@@ -199,14 +198,15 @@ export default function ContactPage() {
                 <p className="text-gray-600 mb-6">
                   Book a free 30-minute consultation to discuss your tax or trucking needs.
                 </p>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => setIsCalendlyOpen(true)}
-                >
-                  Schedule Now
-                </Button>
+                <Link href="/appointment" className="block">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    className="w-full"
+                  >
+                    Book Appointment
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           </div>

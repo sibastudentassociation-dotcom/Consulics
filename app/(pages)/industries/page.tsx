@@ -78,7 +78,7 @@ export default function IndustriesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#123B77] text-white">
       {/* Header */}
       <motion.section
         className="bg-primary-700 text-white py-20"

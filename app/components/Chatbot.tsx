@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { FiMessageCircle, FiX, FiSend } from 'react-icons/fi';
 
 interface Message {
@@ -11,6 +12,7 @@ interface Message {
 }
 
 export default function Chatbot() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -22,6 +24,7 @@ export default function Chatbot() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showAppointmentCTA, setShowAppointmentCTA] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -45,6 +48,7 @@ export default function Chatbot() {
     };
 
     setMessages([...messages, userMessage]);
+    setShowAppointmentCTA(/appointment|schedule|book|consult|consultation/i.test(input));
     setInput('');
     setIsLoading(true);
 
@@ -88,6 +92,7 @@ export default function Chatbot() {
     'Trucking Services?',
     'Pricing?',
     'How to Get Started?',
+    'Book Appointment',
   ];
 
   if (!isOpen) {
@@ -170,6 +175,18 @@ export default function Chatbot() {
               </button>
             ))}
           </div>
+        </div>
+      )}
+
+      {showAppointmentCTA && (
+        <div className="px-4 py-3 border-t border-gray-200">
+          <button
+            type="button"
+            onClick={() => router.push('/appointment')}
+            className="w-full rounded-lg bg-primary-700 px-3 py-2 text-sm font-semibold text-white hover:bg-primary-800 transition"
+          >
+            Book Appointment
+          </button>
         </div>
       )}
 
