@@ -10,8 +10,8 @@ export async function POST(request: NextRequest) {
     const user = await AuthService.createUser(
       validatedData.email,
       validatedData.password,
-      validatedData.firstName,
-      validatedData.lastName
+      `${validatedData.firstName} ${validatedData.lastName}`,
+      validatedData.phone
     );
 
     return NextResponse.json({
@@ -19,8 +19,8 @@ export async function POST(request: NextRequest) {
       user: {
         uid: user.uid,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        name: user.name,
+        role: user.role,
       },
     });
   } catch (error: any) {
@@ -28,6 +28,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
     }
 
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: error?.message || 'Internal server error' }, { status: 500 });
   }
 }

@@ -1,59 +1,54 @@
-import { auth, db } from '@/lib/firebase-admin';
-import { UserRecord } from 'firebase-admin/auth';
+import { adminAuth, adminDb } from '@/lib/firebase-admin';
 
 function ensureAuth() {
-  if (!auth) {
+  if (!adminAuth) {
     throw new Error('Firebase admin is not initialized.');
   }
-  return auth;
+  return adminAuth;
 }
 
 function ensureDb() {
-  if (!db) {
+  if (!adminDb) {
     throw new Error('Firebase admin is not initialized.');
   }
-  return db;
+  return adminDb;
 }
 
 export interface AuthUser {
   uid: string;
+  name: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  phone?: string | null;
   role: 'user' | 'admin';
   createdAt: Date;
+  lastLogin: Date;
 }
 
 export class AuthService {
-  static async createUser(email: string, password: string, firstName: string, lastName: string): Promise<AuthUser> {
-    if (!auth) {
-      throw new Error('Firebase admin is not initialized.');
-    }
-
+  static async createUser(email: string, password: string, name: string, phone?: string): Promise<AuthUser> {
     const adminAuth = ensureAuth();
     const userRecord = await adminAuth.createUser({
       email,
       password,
-      displayName: `${firstName} ${lastName}`,
+      displayName: name,
+      phoneNumber: phone,
     });
 
-    // Store additional user data in Firestore
+    const now = new Date();
     const userData = {
       uid: userRecord.uid,
+      name,
       email,
-      firstName,
-      lastName,
+      phone: phone || null,
       role: 'user' as const,
-      createdAt: new Date(),
+      createdAt: now,
+      lastLogin: now,
     };
 
     const firestore = ensureDb();
     await firestore.collection('users').doc(userRecord.uid).set(userData);
 
-    return {
-      ...userData,
-      createdAt: userData.createdAt,
-    };
+    return userData;
   }
 
   static async getUser(uid: string): Promise<AuthUser | null> {
@@ -64,28 +59,25 @@ export class AuthService {
     const data = userDoc.data();
     return {
       uid: data!.uid,
+      name: data!.name,
       email: data!.email,
-      firstName: data!.firstName,
-      lastName: data!.lastName,
+      phone: data!.phone || null,
       role: data!.role,
       createdAt: data!.createdAt.toDate(),
+      lastLogin: data!.lastLogin.toDate(),
     };
   }
 
   static async verifyToken(token: string): Promise<AuthUser | null> {
-    if (!auth) {
-      return null;
-    }
-
     try {
-      const decodedToken = await auth.verifyIdToken(token);
+      const decodedToken = await ensureAuth().verifyIdToken(token);
       return await this.getUser(decodedToken.uid);
     } catch (error) {
       return null;
     }
   }
 
-  static async updateUser(uid: string, updates: Partial<Pick<AuthUser, 'firstName' | 'lastName'>>): Promise<void> {
+  static async updateUser(uid: string, updates: Partial<Pick<AuthUser, 'name' | 'phone'>>): Promise<void> {
     const firestore = ensureDb();
     await firestore.collection('users').doc(uid).update({
       ...updates,

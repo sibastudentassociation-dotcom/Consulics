@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
+import FloatingButton from './components/FloatingButton';
 
 export const metadata: Metadata = {
   title: 'Consulics - Tax & Trucking Services',
@@ -34,7 +38,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" />
       </head>
       <body className="min-h-screen bg-[#123B77] text-white antialiased">
-        {children}
+        <Navbar />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
+        <Chatbot />
+        <FloatingButton />
       </body>
     </html>
   );

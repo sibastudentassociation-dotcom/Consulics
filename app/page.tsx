@@ -1,4 +1,4 @@
-import HomeContent from '../components/HomeContent';
+import HomeContent from './components/HomeContent';
 
 export const metadata = {
   title: 'CONSULICS | USA Tax & Trucking Compliance Platform',

@@ -12,29 +12,36 @@ const hasAdminCredentials = Boolean(
   firebaseAdminConfig.clientEmail
 );
 
-if (!admin.apps.length && hasAdminCredentials) {
-  const serviceAccount = {
-    project_id: firebaseAdminConfig.projectId,
-    private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-    private_key: firebaseAdminConfig.privateKey,
-    client_email: firebaseAdminConfig.clientEmail,
-    client_id: process.env.FIREBASE_CLIENT_ID,
-    auth_uri: 'https://accounts.google.com/o/oauth2/auth',
-    token_uri: 'https://oauth2.googleapis.com/token',
-    auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-    client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
-  } as any;
-
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: `https://${firebaseAdminConfig.projectId}.firebaseio.com`,
-  });
+declare global {
+  // eslint-disable-next-line no-var
+  var __firebaseAdminApp: admin.app.App | undefined;
 }
 
-const app = admin.apps.length ? admin.app() : null;
+const firebaseAdminApp = global.__firebaseAdminApp || (hasAdminCredentials ? admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: firebaseAdminConfig.projectId,
+    privateKey: firebaseAdminConfig.privateKey,
+    clientEmail: firebaseAdminConfig.clientEmail,
+    privateKeyId: process.env.FIREBASE_PRIVATE_KEY_ID,
+    clientId: process.env.FIREBASE_CLIENT_ID,
+    authUri: 'https://accounts.google.com/o/oauth2/auth',
+    tokenUri: 'https://oauth2.googleapis.com/token',
+    authProviderX509CertUrl: 'https://www.googleapis.com/oauth2/v1/certs',
+    clientCertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL,
+  } as any),
+  databaseURL: process.env.FIREBASE_DATABASE_URL || `https://${firebaseAdminConfig.projectId}.firebaseio.com`,
+}) : undefined);
 
-export const auth = app ? admin.auth() : null;
-export const db = app ? admin.firestore() : null;
-export const storage = app ? admin.storage() : null;
+global.__firebaseAdminApp = firebaseAdminApp;
+
+if (!firebaseAdminApp) {
+  throw new Error('Firebase Admin credentials are missing. Check FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, and FIREBASE_PRIVATE_KEY.');
+}
+
+export const adminAuth = admin.auth(firebaseAdminApp);
+export const adminDb = admin.firestore(firebaseAdminApp);
+export const adminStorage = admin.storage(firebaseAdminApp);
+export const auth = adminAuth;
+export const db = adminDb;
 
 export default admin;

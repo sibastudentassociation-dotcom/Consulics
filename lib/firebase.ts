@@ -1,7 +1,6 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth, signInWithEmailAndPassword, signOut as firebaseSignOut, setPersistence, browserSessionPersistence, User } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || '',
@@ -12,9 +11,27 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '',
 };
 
-const app = initializeApp(firebaseConfig);
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+export const firestore = getFirestore(app);
+
+export async function initializeAuthPersistence() {
+  await setPersistence(auth, browserSessionPersistence);
+}
+
+export async function loginWithEmailPassword(email: string, password: string): Promise<User> {
+  await initializeAuthPersistence();
+  const credential = await signInWithEmailAndPassword(auth, email, password);
+  return credential.user;
+}
+
+export async function logoutUser() {
+  await firebaseSignOut(auth);
+}
+
+export async function getCurrentIdToken(): Promise<string | null> {
+  const user = auth.currentUser;
+  return user ? await user.getIdToken(true) : null;
+}
 
 export default app;

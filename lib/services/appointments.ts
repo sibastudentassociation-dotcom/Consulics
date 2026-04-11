@@ -1,11 +1,11 @@
-import { db } from '@/lib/firebase-admin';
+import { adminDb } from '@/lib/firebase-admin';
 import nodemailer from 'nodemailer';
 
 function ensureDb() {
-  if (!db) {
+  if (!adminDb) {
     throw new Error('Firebase admin is not initialized.');
   }
-  return db;
+  return adminDb;
 }
 
 export interface Appointment {
@@ -43,7 +43,7 @@ export class AppointmentService {
   static async getAppointments(): Promise<Appointment[]> {
     const firestore = ensureDb();
     const snapshot = await firestore.collection('appointments').orderBy('appointmentDate', 'desc').get();
-    return snapshot.docs.map((doc) => ({
+    return snapshot.docs.map((doc: any) => ({
       ...doc.data(),
       createdAt: doc.data().createdAt.toDate(),
     })) as Appointment[];
@@ -57,7 +57,7 @@ export class AppointmentService {
       .orderBy('appointmentTime')
       .get();
 
-    return snapshot.docs.map((doc) => ({
+    return snapshot.docs.map((doc: any) => ({
       ...doc.data(),
       createdAt: doc.data().createdAt.toDate(),
     })) as Appointment[];

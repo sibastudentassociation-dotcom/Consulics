@@ -1,31 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AuthService } from '@/lib/services/auth';
+import { verifyUser, sessionCookieName } from '@/lib/verify-token';
 
 export async function GET(request: NextRequest) {
   try {
-    const authHeader = request.headers.get('authorization');
-
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'No token provided' }, { status: 401 });
-    }
-
-    const token = authHeader.split(' ')[1];
-    const user = await AuthService.verifyToken(token);
-
+    const user = await verifyUser(request);
     if (!user) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    return NextResponse.json({
-      user: {
-        uid: user.uid,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role,
-      },
-    });
-  } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ user });
+  } catch (error: any) {
+    return NextResponse.json({ error: 'Failed to fetch session' }, { status: 500 });
   }
+}
+
+export async function DELETE() {
+  const response = NextResponse.json({ message: 'Logged out' });
+  response.cookies.set({
+    name: sessionCookieName,
+    value: '',
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
+    expires: new Date(0),
+  });
+  return response;
 }

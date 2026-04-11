@@ -1,17 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AppointmentService } from '@/lib/services/appointments';
+import { requireAdmin } from '@/lib/require-admin';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    await requireAdmin(request);
     const appointments = await AppointmentService.getAppointments();
     return NextResponse.json({ appointments });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch appointments' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error?.message || 'Failed to fetch appointments' }, { status: error.status || 500 });
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
+    await requireAdmin(request);
     const body = await request.json();
     const { id, status, appointmentDate, appointmentTime } = body;
 
@@ -25,9 +28,8 @@ export async function PUT(request: NextRequest) {
     if (appointmentTime) update.appointmentTime = appointmentTime;
 
     await AppointmentService.updateAppointment(id, update as any);
-
     return NextResponse.json({ message: 'Appointment updated successfully' });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to update appointment' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error?.message || 'Failed to update appointment' }, { status: error.status || 500 });
   }
 }

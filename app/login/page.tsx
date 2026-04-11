@@ -14,20 +14,26 @@ interface LoginFormData {
 export default function LoginPage() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log('Logging in:', data);
-      
-      // Store fake auth token
-      localStorage.setItem('auth_token', 'fake_token_' + Math.random());
-      
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData?.error || 'Login failed');
+      }
+
       toast.success('Logged in successfully!');
-      setTimeout(() => router.push('/portal'), 1000);
-    } catch (error) {
-      toast.error('Login failed. Please check your credentials.');
+      router.push('/portal');
+    } catch (error: any) {
+      setServerError(error.message);
+      toast.error(error.message || 'Login failed. Please check your credentials.');
     }
   };
 
@@ -36,10 +42,11 @@ export default function LoginPage() {
       <Toaster />
 
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-white rounded-lg shadow-2xl p-8">
           <h1 className="text-3xl font-bold text-center mb-2">Welcome Back</h1>
           <p className="text-center text-gray-600 mb-8">Sign in to your account</p>
+
+          {serverError && <p className="text-red-600 text-sm mb-4">{serverError}</p>}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>

@@ -19,6 +19,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<RegisterFormData>();
   const password = watch('password');
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const onSubmit = async (data: RegisterFormData) => {
     if (data.password !== data.confirmPassword) {
@@ -27,13 +28,24 @@ export default function RegisterPage() {
     }
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log('Registering:', data);
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData?.error || 'Registration failed');
+      }
+
       toast.success('Account created! Redirecting to login...');
       setTimeout(() => router.push('/login'), 1500);
-    } catch (error) {
-      toast.error('Registration failed. Please try again.');
+    } catch (error: any) {
+      setServerError(error.message);
+      toast.error(error.message || 'Registration failed. Please try again.');
     }
   };
 
@@ -42,10 +54,11 @@ export default function RegisterPage() {
       <Toaster />
 
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-white rounded-lg shadow-2xl p-8">
           <h1 className="text-3xl font-bold text-center mb-2">Create Account</h1>
           <p className="text-center text-gray-600 mb-8">Join Consulics today</p>
+
+          {serverError && <p className="text-red-600 text-sm mb-4">{serverError}</p>}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">

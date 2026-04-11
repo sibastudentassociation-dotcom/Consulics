@@ -1,10 +1,10 @@
-import { db } from '@/lib/firebase-admin';
+import { adminDb } from '@/lib/firebase-admin';
 
 function ensureDb() {
-  if (!db) {
+  if (!adminDb) {
     throw new Error('Firebase admin is not initialized.');
   }
-  return db;
+  return adminDb;
 }
 
 export interface Project {
@@ -24,7 +24,7 @@ export class ProjectsService {
   static async getAllProjects(): Promise<Project[]> {
     const firestore = ensureDb();
     const snapshot = await firestore.collection('projects').where('isActive', '==', true).get();
-    return snapshot.docs.map(doc => ({
+    return snapshot.docs.map((doc: any) => ({
       ...doc.data(),
       createdAt: doc.data().createdAt.toDate(),
       updatedAt: doc.data().updatedAt.toDate(),

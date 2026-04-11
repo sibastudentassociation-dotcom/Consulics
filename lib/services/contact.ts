@@ -1,11 +1,11 @@
-import { db } from '@/lib/firebase-admin';
+import { adminDb } from '@/lib/firebase-admin';
 import nodemailer from 'nodemailer';
 
 function ensureDb() {
-  if (!db) {
+  if (!adminDb) {
     throw new Error('Firebase admin is not initialized.');
   }
-  return db;
+  return adminDb;
 }
 
 export interface ContactInquiry {
@@ -42,7 +42,7 @@ export class ContactService {
   static async getInquiries(): Promise<ContactInquiry[]> {
     const firestore = ensureDb();
     const snapshot = await firestore.collection('contact_inquiries').orderBy('createdAt', 'desc').get();
-    return snapshot.docs.map(doc => ({
+    return snapshot.docs.map((doc: any) => ({
       ...doc.data(),
       createdAt: doc.data().createdAt.toDate(),
     })) as ContactInquiry[];

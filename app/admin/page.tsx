@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { auth } from '@/lib/firebase-admin';
+import { requireAdminToken } from '@/lib/require-admin';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 
 export default async function AdminPage() {
@@ -11,12 +11,8 @@ export default async function AdminPage() {
     redirect('/login');
   }
 
-  if (!auth) {
-    redirect('/login');
-  }
-
   try {
-    await auth.verifyIdToken(session);
+    await requireAdminToken(session);
   } catch (error) {
     redirect('/login');
   }

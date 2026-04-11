@@ -132,6 +132,7 @@ export default function AppointmentPage() {
                   <div>
                     <label className="block text-sm font-medium text-dark mb-2">First Name</label>
                     <Input
+                      autoComplete="given-name"
                       {...register('firstName', { required: 'First name is required' })}
                       placeholder="John"
                     />
@@ -140,6 +141,7 @@ export default function AppointmentPage() {
                   <div>
                     <label className="block text-sm font-medium text-dark mb-2">Last Name</label>
                     <Input
+                      autoComplete="family-name"
                       {...register('lastName', { required: 'Last name is required' })}
                       placeholder="Doe"
                     />
@@ -152,6 +154,7 @@ export default function AppointmentPage() {
                     <label className="block text-sm font-medium text-dark mb-2">Email Address</label>
                     <Input
                       type="email"
+                      autoComplete="email"
                       {...register('email', { required: 'Email is required' })}
                       placeholder="john@example.com"
                     />
@@ -161,6 +164,7 @@ export default function AppointmentPage() {
                     <label className="block text-sm font-medium text-dark mb-2">Phone Number</label>
                     <Input
                       type="tel"
+                      autoComplete="tel"
                       {...register('phone', { required: 'Phone number is required' })}
                       placeholder="(555) 123-4567"
                     />
@@ -173,6 +177,7 @@ export default function AppointmentPage() {
                     <label className="block text-sm font-semibold text-dark mb-3">Appointment Date</label>
                     <Input
                       type="date"
+                      autoComplete="off"
                       min={new Date().toISOString().split('T')[0]}
                       {...register('appointmentDate', { required: 'Appointment date is required' })}
                       value={selectedDate}
@@ -187,6 +192,7 @@ export default function AppointmentPage() {
                   <div className="relative z-30">
                     <label className="block text-sm font-semibold text-dark mb-3">Time Slot</label>
                     <select
+                      autoComplete="off"
                       {...register('appointmentTime', { required: 'Appointment time is required' })}
                       className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-dark font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
@@ -209,6 +215,7 @@ export default function AppointmentPage() {
                   <div className="relative z-20">
                     <label className="block text-sm font-semibold text-dark mb-3">Service Type</label>
                     <select
+                      autoComplete="off"
                       {...register('serviceType', { required: 'Service type is required' })}
                       className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-dark font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
@@ -226,6 +233,7 @@ export default function AppointmentPage() {
                 <div>
                   <label className="block text-sm font-medium text-dark mb-2">Notes / Additional Information</label>
                   <Textarea
+                    autoComplete="off"
                     {...register('notes')}
                     placeholder="Share any special instructions or questions."
                     rows={4}
