@@ -31,3 +31,4 @@ dist/
 
 # OS
 Thumbs.db
+.vercel
