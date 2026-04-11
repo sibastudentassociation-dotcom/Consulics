@@ -3,6 +3,7 @@
 import { FiArrowRight, FiCheck } from 'react-icons/fi';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import ServiceCard from '@/app/components/ServiceCard';
 
 export default function TruckingServicesPage() {
   const containerVariants = {
@@ -40,6 +41,50 @@ export default function TruckingServicesPage() {
           </p>
         </div>
       </motion.section>
+
+      {/* To start a trucking business section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+              To start a trucking business, you'll need a DOT Number, IFTA and IRP registration, proper licensing, insurance, and a commercial vehicle.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, staggerChildren: 0.1 }}
+            viewport={{ once: true }}
+          >
+            {truckingServiceCards.map((card, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <ServiceCard
+                  icon={card.icon}
+                  title={card.title}
+                  description={card.description}
+                  showContactButton={true}
+                  contactButtonText="Questions?"
+                  contactButtonHref="/contact"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
       {/* Trucking Service Categories */}
       <section className="py-20">
@@ -301,5 +346,53 @@ const benefits = [
     icon: '✓',
     title: 'Peace of Mind',
     description: 'Rest assured your company is fully compliant',
+  },
+];
+
+const truckingServiceCards = [
+  {
+    icon: '🔢',
+    title: 'USDOT',
+    description: 'Obtain your USDOT number for operating commercial vehicles interstate.',
+  },
+  {
+    icon: '📋',
+    title: 'Operating Authority',
+    description: 'Get your motor carrier operating authority from the FMCSA.',
+  },
+  {
+    icon: '⛽',
+    title: 'IFTA',
+    description: 'International Fuel Tax Agreement registration and quarterly filings.',
+  },
+  {
+    icon: '🚗',
+    title: 'IRP',
+    description: 'International Registration Plan for apportioned registration.',
+  },
+  {
+    icon: '🏷️',
+    title: 'Apportioned Tags',
+    description: 'Vehicle registration tags for interstate operations.',
+  },
+  {
+    icon: '📄',
+    title: 'For Hire Tags',
+    description: 'Intrastate carrier registration and permits.',
+  },
+  {
+    icon: '💵',
+    title: 'HVUT 2290 (HVUT)',
+    description: 'Heavy Vehicle Use Tax form 2290 filing for trucks over 55,000 lbs.',
+  },
+  {
+    icon: '🚕',
+    title: 'Limousine / Taxi Service',
+    description: 'Licensing and compliance for luxury sedan and taxi services.',
+  },
+  {
+    icon: '🏥',
+    title: 'NMC (Non-Emergency Medical Transportation)',
+    description: 'NEMT provider registration and compliance requirements.',
   },
 ];

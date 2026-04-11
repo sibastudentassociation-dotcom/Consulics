@@ -27,19 +27,21 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1">
             <NavLink href="/">Home</NavLink>
-            <NavDropdown href="/services/tax" title="Tax Services">
+            <NavLink href="/services/tax" >Tax Services</NavLink>
+            {/* <NavDropdown href="/services/tax" title="Tax Services">
               <NavDropdownItem href="/services/tax">Individual Tax Filing</NavDropdownItem>
               <NavDropdownItem href="/services/tax">Small Business Taxes</NavDropdownItem>
               <NavDropdownItem href="/services/tax">Self-Employed Taxes</NavDropdownItem>
               <NavDropdownItem href="/services/tax">Additional Services</NavDropdownItem>
-            </NavDropdown>
+            </NavDropdown> */}
 
-            <NavDropdown href="/services/trucking" title="Trucking Services">
+            <NavLink  href="/services/trucking" >Trucking Services</NavLink>
+            {/* <NavDropdown href="/services/trucking" title="Trucking Services">
               <NavDropdownItem href="/services/trucking">Company Setup</NavDropdownItem>
               <NavDropdownItem href="/services/trucking">IFTA Services</NavDropdownItem>
               <NavDropdownItem href="/services/trucking">IRP Services</NavDropdownItem>
               <NavDropdownItem href="/services/trucking">Compliance</NavDropdownItem>
-            </NavDropdown>
+            </NavDropdown> */}
 
             <NavLink href="/industries">Industries</NavLink>
             <NavLink href="/pricing">Pricing</NavLink>
