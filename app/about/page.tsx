@@ -49,16 +49,16 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
-              <p className="text-gray-600 leading-relaxed">
+              <h2 className="text-3xl font-bold mb-4 text-heading">Our Mission</h2>
+              <p className="text-body leading-relaxed">
                 We believe that tax and business compliance shouldn't be complicated or stressful. Our mission is to provide
                 expert, affordable, and accessible tax and trucking services to individuals and businesses of all sizes.
               </p>
             </motion.div>
 
             <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <h2 className="text-3xl font-bold mb-4">Our Vision</h2>
-              <p className="text-gray-600 leading-relaxed">
+              <h2 className="text-3xl font-bold mb-4 text-heading">Our Vision</h2>
+              <p className="text-body leading-relaxed">
                 To become the most trusted and customer-friendly tax and compliance service provider, helping thousands of
                 entrepreneurs and business owners achieve their financial goals with confidence and peace of mind.
               </p>
@@ -109,11 +109,11 @@ export default function AboutPage() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-gray-50 rounded-lg p-8 hover:shadow-lg transition"
+                className="card-base hover:shadow-medium transition"
               >
                 <div className="text-4xl text-accent-500 mb-4">{reason.icon}</div>
-                <h3 className="text-xl font-bold mb-3">{reason.title}</h3>
-                <p className="text-gray-600 text-sm">{reason.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-heading">{reason.title}</h3>
+                <p className="text-body text-sm">{reason.description}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -142,13 +142,13 @@ export default function AboutPage() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
+                className="card-base overflow-hidden hover:shadow-medium transition"
               >
                 <div className="bg-gradient-to-br from-primary-700 to-primary-900 h-48"></div>
                 <div className="p-6">
-                  <h3 className="text-lg font-bold mb-1">{member.name}</h3>
+                  <h3 className="text-lg font-bold mb-1 text-heading">{member.name}</h3>
                   <p className="text-accent-500 font-semibold text-sm mb-3">{member.title}</p>
-                  <p className="text-gray-600 text-sm">{member.bio}</p>
+                  <p className="text-body text-sm">{member.bio}</p>
                 </div>
               </motion.div>
             ))}

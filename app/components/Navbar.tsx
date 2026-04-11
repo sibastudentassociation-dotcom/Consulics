@@ -43,7 +43,6 @@ export default function Navbar() {
 
             <NavLink href="/industries">Industries</NavLink>
             <NavLink href="/pricing">Pricing</NavLink>
-            <NavLink href="/resources">Resources</NavLink>
             <NavLink href="/about">About</NavLink>
           </div>
 
@@ -77,7 +76,6 @@ export default function Navbar() {
             <NavLink href="/services/trucking" onClick={closeMenu}>Trucking Services</NavLink>
             <NavLink href="/industries" onClick={closeMenu}>Industries</NavLink>
             <NavLink href="/pricing" onClick={closeMenu}>Pricing</NavLink>
-            <NavLink href="/resources" onClick={closeMenu}>Resources</NavLink>
             <NavLink href="/about" onClick={closeMenu}>About</NavLink>
             <div className="pt-4 space-y-2">
               <Link
