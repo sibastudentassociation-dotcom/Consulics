@@ -55,11 +55,11 @@ export default function TaxServicesPage() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition"
+                className="card-base hover:shadow-medium transition"
               >
                 <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
-                <p className="text-gray-600 mb-6">{service.description}</p>
+                <h3 className="text-2xl font-bold mb-4 text-heading">{service.title}</h3>
+                <p className="text-body mb-6">{service.description}</p>
 
                 <div className="space-y-3 mb-8">
                   {service.items.map((item, i) => (
@@ -112,8 +112,8 @@ export default function TaxServicesPage() {
               <motion.div key={index} variants={itemVariants} className="flex gap-4">
                 <div className="text-3xl text-accent-500 flex-shrink-0">{benefit.icon}</div>
                 <div>
-                  <h3 className="text-lg font-bold mb-2 text-gray-900">{benefit.title}</h3>
-                  <p className="text-gray-600 text-sm">{benefit.description}</p>
+                  <h3 className="text-lg font-bold mb-2 text-heading">{benefit.title}</h3>
+                  <p className="text-body text-sm">{benefit.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -139,8 +139,8 @@ export default function TaxServicesPage() {
                   <div className="bg-primary-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                     {index + 1}
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-sm text-gray-600">{step.description}</p>
+                  <h3 className="font-bold text-heading mb-2">{step.title}</h3>
+                  <p className="text-sm text-body">{step.description}</p>
                 </div>
                 {index < process.length - 1 && (
                   <div className="hidden md:block absolute top-12 left-full w-full h-1 bg-primary-200"></div>

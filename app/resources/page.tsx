@@ -152,11 +152,11 @@ export default function ResourcesPage() {
                 key={index}
                 href={guide.link}
                 variants={itemVariants}
-                className="bg-gray-50 hover:bg-primary-50 border-2 border-gray-200 hover:border-primary-500 rounded-lg p-6 transition flex flex-col justify-between"
+                className="card-muted hover:bg-primary-50 hover:border-primary-500 p-6 transition flex flex-col justify-between"
               >
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{guide.title}</h3>
-                  <p className="text-sm text-gray-600">{guide.description}</p>
+                  <h3 className="text-lg font-bold text-heading mb-2">{guide.title}</h3>
+                  <p className="text-sm text-body">{guide.description}</p>
                 </div>
                 <div className="mt-4 flex items-center text-primary-700 font-semibold">
                   Download <FiArrowRight className="ml-2" />
@@ -189,7 +189,7 @@ export default function ResourcesPage() {
               <motion.article
                 key={post.id}
                 variants={itemVariants}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
+                className="card-base overflow-hidden hover:shadow-medium transition"
               >
                 <div className="bg-gradient-to-br from-primary-700 to-primary-900 h-40"></div>
 
@@ -198,19 +198,19 @@ export default function ResourcesPage() {
                     <span className="text-xs font-semibold text-accent-500 bg-accent-50 px-3 py-1 rounded-full">
                       {post.category}
                     </span>
-                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                    <span className="text-xs text-muted flex items-center gap-1">
                       <FiClock size={14} /> {post.readTime} min read
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold mb-3 text-gray-900 hover:text-primary-700 transition cursor-pointer">
+                  <h3 className="text-xl font-bold mb-3 text-heading hover:text-primary-700 transition cursor-pointer">
                     {post.title}
                   </h3>
 
-                  <p className="text-gray-600 text-sm mb-4">{post.excerpt}</p>
+                  <p className="text-body text-sm mb-4">{post.excerpt}</p>
 
                   <div className="flex justify-between items-center">
-                    <small className="text-gray-500">
+                    <small className="text-muted">
                       By {post.author} on {new Date(post.date).toLocaleDateString()}
                     </small>
                     <Link href="#" className="text-primary-700 font-semibold hover:text-primary-900 flex items-center gap-1">
@@ -243,9 +243,9 @@ export default function ResourcesPage() {
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <details key={index} className="border border-gray-300 rounded-lg p-6 hover:bg-gray-50 cursor-pointer">
-                <summary className="font-semibold text-lg text-gray-900">{faq.question}</summary>
-                <p className="text-gray-600 mt-4">{faq.answer}</p>
+              <details key={index} className="border border-slate-300 rounded-lg p-6 hover:bg-slate-50 cursor-pointer">
+                <summary className="font-semibold text-lg text-heading">{faq.question}</summary>
+                <p className="text-body mt-4">{faq.answer}</p>
               </details>
             ))}
           </div>

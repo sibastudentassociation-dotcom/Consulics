@@ -94,3 +94,32 @@ button, a {
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
 }
+
+/* Design tokens */
+.section-bg-white {
+  @apply bg-white;
+}
+.section-bg-muted {
+  @apply bg-slate-50;
+}
+.card-base {
+  @apply bg-white border border-slate-200 shadow-soft rounded-lg;
+}
+.card-muted {
+  @apply bg-slate-50 border border-slate-200 rounded-lg;
+}
+.text-heading {
+  @apply text-slate-900;
+}
+.text-body {
+  @apply text-slate-700;
+}
+.text-muted {
+  @apply text-slate-500;
+}
+.text-link {
+  @apply text-primary-700 hover:text-primary-900;
+}
+.button-secondary {
+  @apply bg-white text-primary-700 border border-primary-700 hover:bg-primary-50;
+}

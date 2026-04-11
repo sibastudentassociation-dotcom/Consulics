@@ -55,11 +55,11 @@ export default function TruckingServicesPage() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition"
+                className="card-base hover:shadow-medium transition"
               >
                 <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
-                <p className="text-gray-600 mb-6">{service.description}</p>
+                <h3 className="text-2xl font-bold mb-4 text-heading">{service.title}</h3>
+                <p className="text-body mb-6">{service.description}</p>
 
                 <div className="space-y-3 mb-8">
                   {service.items.map((item, i) => (
@@ -112,7 +112,7 @@ export default function TruckingServicesPage() {
               <motion.div key={index} variants={itemVariants} className="bg-red-50 border-2 border-red-200 rounded-lg p-6">
                 <h3 className="text-lg font-bold text-red-900 mb-2">{deadline.name}</h3>
                 <p className="text-2xl font-bold text-red-600 mb-2">{deadline.date}</p>
-                <p className="text-gray-700 text-sm">{deadline.description}</p>
+                <p className="text-body text-sm">{deadline.description}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -141,8 +141,8 @@ export default function TruckingServicesPage() {
               <motion.div key={index} variants={itemVariants} className="flex gap-4">
                 <div className="text-3xl text-accent-500 flex-shrink-0">{benefit.icon}</div>
                 <div>
-                  <h3 className="text-lg font-bold mb-2 text-gray-900">{benefit.title}</h3>
-                  <p className="text-gray-600 text-sm">{benefit.description}</p>
+                  <h3 className="text-lg font-bold mb-2 text-heading">{benefit.title}</h3>
+                  <p className="text-body text-sm">{benefit.description}</p>
                 </div>
               </motion.div>
             ))}
