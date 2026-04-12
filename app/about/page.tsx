@@ -90,13 +90,13 @@ export default function AboutPage() {
       {/* Why Choose Us */}
       <motion.section
         className="py-20 bg-white"
-        initial={{ opacity: 0 }}
+        initial={{ opacity:   0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-16">Why Choose Consulics?</h2>
+          <h2 className="text-4xl font-bold text-gray-900 text-center mb-16">Why Choose Consulics?</h2>
 
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
@@ -120,7 +120,7 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
-      {/* Team */}
+      {/* Team
       <motion.section
         className="py-20 bg-gray-100"
         initial={{ opacity: 0 }}
@@ -154,7 +154,7 @@ export default function AboutPage() {
             ))}
           </motion.div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* Contact CTA */}
       <motion.section
@@ -211,25 +211,25 @@ const reasons = [
   },
 ];
 
-const team = [
-  {
-    name: 'Sarah Johnson',
-    title: 'Founder & CEO',
-    bio: 'Tax expert with 15+ years of experience',
-  },
-  {
-    name: 'Michael Chen',
-    title: 'Director of Trucking Services',
-    bio: 'Specialized in IFTA, IRP, and DOT compliance',
-  },
-  {
-    name: 'Amanda Rodriguez',
-    title: 'Lead Tax Specialist',
-    bio: 'CPA with expertise in business taxation',
-  },
-  {
-    name: 'David Thompson',
-    title: 'Customer Success Manager',
-    bio: 'Dedicated to ensuring client satisfaction',
-  },
-];
+// const team = [
+//   {
+//     name: 'Sarah Johnson',
+//     title: 'Founder & CEO',
+//     bio: 'Tax expert with 15+ years of experience',
+//   },
+//   {
+//     name: 'Michael Chen',
+//     title: 'Director of Trucking Services',
+//     bio: 'Specialized in IFTA, IRP, and DOT compliance',
+//   },
+//   {
+//     name: 'Amanda Rodriguez',
+//     title: 'Lead Tax Specialist',
+//     bio: 'CPA with expertise in business taxation',
+//   },
+//   {
+//     name: 'David Thompson',
+//     title: 'Customer Success Manager',
+//     bio: 'Dedicated to ensuring client satisfaction',
+//   },
+// ];

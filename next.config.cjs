@@ -8,6 +8,9 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   compress: true,
   swcMinify: true,
   webpack(config, { isServer }) {

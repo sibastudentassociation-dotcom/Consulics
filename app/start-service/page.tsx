@@ -3,7 +3,9 @@
 import { useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'next/navigation';
+import { motion } from 'framer-motion';
 import FileUpload from '@/app/components/FileUpload';
+import ServiceCard from '@/app/components/ServiceCard';
 import toast, { Toaster } from 'react-hot-toast';
 
 interface ServiceFormData {
@@ -240,6 +242,50 @@ function StartServicePageContent() {
           </div>
         </div>
       </section>
+
+      {/* Which type of company is right for you */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-[#040C33] mb-4">
+              Which type of company is right for you?
+            </h2>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, staggerChildren: 0.1 }}
+            viewport={{ once: true }}
+          >
+            {businessTypeCards.map((card, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <ServiceCard
+                  icon={card.icon}
+                  title={card.title}
+                  description={card.description}
+                  showContactButton={true}
+                  contactButtonText="Questions?"
+                  contactButtonHref="/contact"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }
@@ -251,3 +297,36 @@ export default function StartServicePage() {
     </Suspense>
   );
 }
+
+const businessTypeCards = [
+  {
+    icon: '🔢',
+    title: 'EIN (Employer Identification Number)',
+    description: 'An EIN is a unique identifier for businesses, used to file taxes and manage employee payroll.',
+  },
+  {
+    icon: '👤',
+    title: 'Sole Proprietorship',
+    description: 'A business owned and operated by one person with simplicity but personal liability risks.',
+  },
+  {
+    icon: '🏢',
+    title: 'LLC (Limited Liability Company)',
+    description: 'Provides liability protection with flexible tax options.',
+  },
+  {
+    icon: '📊',
+    title: 'S Corp',
+    description: 'Allows income pass-through taxation while offering limited liability protection.',
+  },
+  {
+    icon: '🏛️',
+    title: 'C Corp',
+    description: 'Separate legal entity taxed independently from shareholders.',
+  },
+  {
+    icon: '🚛',
+    title: 'Trucking Setup',
+    description: 'Registering, licensing, and compliance setup for trucking businesses.',
+  },
+];
