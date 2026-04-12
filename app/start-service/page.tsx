@@ -277,13 +277,22 @@ function StartServicePageContent() {
                   icon={card.icon}
                   title={card.title}
                   description={card.description}
-                  showContactButton={true}
-                  contactButtonText="Questions?"
-                  contactButtonHref="/contact"
+                  showContactButton={false}
                 />
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-[#040C33] mb-4">Use this space for a video clip or YouTube clip</h2>
+          <div className="mx-auto max-w-4xl rounded-[2rem] border border-gray-200 bg-slate-950/5 p-8">
+            <div className="aspect-video rounded-[1.5rem] bg-slate-900/80 flex items-center justify-center text-slate-400">
+              Video placeholder
+            </div>
+          </div>
         </div>
       </section>
     </div>

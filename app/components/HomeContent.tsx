@@ -55,16 +55,18 @@ export default function HomeContent() {
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
           <div className="space-y-8">
-            <p className="inline-flex rounded-full border border-orange-400/30 bg-orange-500/10 px-4 py-2 text-sm uppercase tracking-[0.28em] text-orange-300">
+            {/* <p className="inline-flex rounded-full border border-orange-400/30 bg-orange-500/10 px-4 py-2 text-sm uppercase tracking-[0.28em] text-orange-300">
               U.S. tax + trucking support
-            </p>
+            </p> */}
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
-                Simple, trusted compliance for trucking and tax in the USA.
+                US Taxation and Motor Carrier Compliance services
               </h1>
               <p className="max-w-2xl text-lg text-slate-300">
-                Clear pathways to IFTA, IRP, Form 2290, tax filing, and secure client service without the jargon.
+                Seamless, Trusted Compliance Solutions for Trucking and Taxation Nationwide.
               </p>
+              <p className="max-w-2xl text-lg text-slate-300">
+Comprehensive Tax and Compliance Solutions Powered by Industry Leaders Ensuring Secure, Client Focused Service with Unparalleled Expertise and Precision              </p>
             </div>
 
             <div className="flex flex-col gap-4 sm:flex-row">
@@ -137,26 +139,27 @@ export default function HomeContent() {
       <section className="bg-slate-950/80 py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm uppercase tracking-[0.28em] text-orange-300">Why CONSULICS</p>
-          <h2 className="mt-4 text-3xl font-bold text-white">A clean entry page, not a long sales pitch.</h2>
+          <h2 className="mt-4 text-3xl font-bold text-white"> Efficient and Direct Service Access
+</h2>
           <p className="mt-4 text-slate-300 max-w-2xl mx-auto">
-            Use the site navigation and dedicated pages for details. The homepage is now a quick start point with visual service access.
+Experience a streamlined entry with quick access to services. For detailed information, explore our dedicated pages through intuitive navigation.
           </p>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 text-left">
               <p className="text-sm uppercase tracking-[0.24em] text-orange-300">1</p>
-              <h3 className="mt-3 text-xl font-semibold text-white">Choose a service</h3>
-              <p className="mt-2 text-slate-300">Select tax, trucking, or portal from the main menu or page cards.</p>
+              <h3 className="mt-3 text-xl font-semibold text-white">Efficient and Direct Service Access</h3>
+              <p className="mt-2 text-slate-300">Experience a streamlined entry with quick access to services. For detailed information, explore our dedicated pages through intuitive navigation.</p>
             </div>
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 text-left">
               <p className="text-sm uppercase tracking-[0.24em] text-orange-300">2</p>
-              <h3 className="mt-3 text-xl font-semibold text-white">Review the page</h3>
-              <p className="mt-2 text-slate-300">Each page contains the right details for that service category.</p>
+              <h3 className="mt-3 text-xl font-semibold text-white">Clear Service Pathways</h3>
+              <p className="mt-2 text-slate-300">The homepage is now a quick start point with visual service access and minimal distraction.</p>
             </div>
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 text-left">
               <p className="text-sm uppercase tracking-[0.24em] text-orange-300">3</p>
-              <h3 className="mt-3 text-xl font-semibold text-white">Start or contact</h3>
-              <p className="mt-2 text-slate-300">Begin a service request or book a consultation without extra noise.</p>
+              <h3 className="mt-3 text-xl font-semibold text-white">Secure Client Service</h3>
+              <p className="mt-2 text-slate-300">Comprehensive tax and compliance solutions powered by industry leaders ensuring secure, client-focused service.</p>
             </div>
           </div>
         </div>
@@ -165,7 +168,10 @@ export default function HomeContent() {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 rounded-[2rem] border border-orange-400/10 bg-orange-500/5 p-10 text-center">
           <p className="text-sm uppercase tracking-[0.28em] text-orange-300">Ready to start?</p>
-          <h2 className="mt-4 text-3xl font-bold text-white">Move forward with the right U.S. service page.</h2>
+          <h2 className="mt-4 text-3xl font-bold text-white">Initiate Your Journey with Confidence</h2>
+          <p className="mt-4 text-slate-200 max-w-3xl mx-auto">
+            Proceed to the relevant U.S. service page for expert tax and compliance solutions tailored to your needs.
+          </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row justify-center">
             <Link
               href="/services/tax"

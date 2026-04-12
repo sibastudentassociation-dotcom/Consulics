@@ -353,46 +353,46 @@ const truckingServiceCards = [
   {
     icon: '🔢',
     title: 'USDOT',
-    description: 'Obtain your USDOT number for operating commercial vehicles interstate.',
+    description: 'A USDOT number is a unique identifier issued by the Federal Motor Carrier Safety Administration for interstate commercial vehicles.',
   },
   {
     icon: '📋',
     title: 'Operating Authority',
-    description: 'Get your motor carrier operating authority from the FMCSA.',
+    description: 'Operating Authority allows a trucking company to legally transport freight across state lines, issued by the FMCSA.',
   },
   {
     icon: '⛽',
     title: 'IFTA',
-    description: 'International Fuel Tax Agreement registration and quarterly filings.',
+    description: 'IFTA is an agreement between states to simplify fuel tax reporting for interstate trucking companies, based on miles traveled.',
   },
   {
     icon: '🚗',
     title: 'IRP',
-    description: 'International Registration Plan for apportioned registration.',
+    description: 'IRP is a registration program that allows trucking companies to operate across multiple states with a single vehicle registration.',
   },
   {
     icon: '🏷️',
     title: 'Apportioned Tags',
-    description: 'Vehicle registration tags for interstate operations.',
+    description: 'Apportioned tags are license plates that allow a commercial vehicle to operate in multiple states, with fees based on mileage.',
   },
   {
     icon: '📄',
     title: 'For Hire Tags',
-    description: 'Intrastate carrier registration and permits.',
+    description: 'For hire tags indicate that a vehicle is used for transporting goods or passengers for compensation, requiring specific licensing.',
   },
   {
     icon: '💵',
-    title: 'HVUT 2290 (HVUT)',
-    description: 'Heavy Vehicle Use Tax form 2290 filing for trucks over 55,000 lbs.',
+    title: 'HVUT 2290 (Heavy Vehicle Use Tax Form 2290)',
+    description: 'HVUT 2290 is an annual federal tax paid by owners of heavy vehicles weighing 55,000 pounds or more, used on public highways.',
   },
   {
     icon: '🚕',
-    title: 'Limousine / Taxi Service',
-    description: 'Licensing and compliance for luxury sedan and taxi services.',
+    title: 'Limousine, Taxi service',
+    description: 'For hire tags are required for vehicles like limousines and Uber Black, ensuring legal operation and meeting licensing and insurance standards.',
   },
   {
     icon: '🏥',
     title: 'NMC (Non-Emergency Medical Transportation)',
-    description: 'NEMT provider registration and compliance requirements.',
+    description: 'NMC provides transport for individuals who need medical care but are not in an emergency, ensuring safe and reliable travel.',
   },
 ];

@@ -194,7 +194,7 @@ export default function AppointmentPage() {
                     <select
                       autoComplete="off"
                       {...register('appointmentTime', { required: 'Appointment time is required' })}
-                      className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-dark font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-black font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
                       <option value="">Select a time slot</option>
                       {availableSlots.length ? (
@@ -217,7 +217,7 @@ export default function AppointmentPage() {
                     <select
                       autoComplete="off"
                       {...register('serviceType', { required: 'Service type is required' })}
-                      className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-dark font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full h-10 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-black font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
                       <option value="">Select a service</option>
                       {serviceOptions.map((option) => (
