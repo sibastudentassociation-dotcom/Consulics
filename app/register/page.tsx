@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -56,6 +57,10 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-2xl p-8">
           <h1 className="text-3xl font-bold text-center mb-2 text-gray-900">Create Account</h1>
+          <div className="flex justify-center  bg-gradient-to-br mb-6">
+            <Image src="/logo/1.png" alt="Consulics Logo" width={200} height={180} priority />
+          </div>
+          <h1 className="text-3xl font-bold text-center mb-2">Create Account</h1>
           <p className="text-center text-gray-600 mb-8">Join Consulics today</p>
 
           {serverError && <p className="text-red-600 text-sm mb-4">{serverError}</p>}
