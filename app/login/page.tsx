@@ -45,7 +45,7 @@ export default function LoginPage() {
       <Toaster />
 
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-2xl p-8">
+        <div className="bg-white rounded-lg shadow-xl p-8">
           <div className="flex bg-gradient-to-br  justify-center mb-6">
             <Image src="/logo/1.png" alt="Consulics Logo" width={200} height={180} priority />
           </div>

@@ -5,6 +5,13 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import ServiceCard from '@/app/components/ServiceCard';
 
+interface TruckingServiceCard {
+  icon?: string;
+  imageSrc?: string;
+  title: string;
+  description: string;
+}
+
 export default function TruckingServicesPage() {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -74,6 +81,7 @@ export default function TruckingServicesPage() {
               >
                 <ServiceCard
                   icon={card.icon}
+                  imageSrc={card.imageSrc}
                   title={card.title}
                   description={card.description}
                   showContactButton={true}
@@ -349,7 +357,7 @@ const benefits = [
   },
 ];
 
-const truckingServiceCards = [
+const truckingServiceCards: TruckingServiceCard[] = [
   {
     icon: '🔢',
     title: 'USDOT',
@@ -361,17 +369,17 @@ const truckingServiceCards = [
     description: 'Operating Authority allows a trucking company to legally transport freight across state lines, issued by the FMCSA.',
   },
   {
-    icon: '⛽',
+    imageSrc: '/images/trucking/ifta.svg',
     title: 'IFTA',
     description: 'IFTA is an agreement between states to simplify fuel tax reporting for interstate trucking companies, based on miles traveled.',
   },
   {
-    icon: '🚗',
+    imageSrc: '/images/trucking/irp-trailer.svg',
     title: 'IRP',
     description: 'IRP is a registration program that allows trucking companies to operate across multiple states with a single vehicle registration.',
   },
   {
-    icon: '🏷️',
+    imageSrc: '/images/trucking/apportioned-tags.svg',
     title: 'Apportioned Tags',
     description: 'Apportioned tags are license plates that allow a commercial vehicle to operate in multiple states, with fees based on mileage.',
   },
@@ -381,7 +389,7 @@ const truckingServiceCards = [
     description: 'For hire tags indicate that a vehicle is used for transporting goods or passengers for compensation, requiring specific licensing.',
   },
   {
-    icon: '💵',
+    imageSrc: '/images/trucking/form-2290.svg',
     title: 'HVUT 2290 (Heavy Vehicle Use Tax Form 2290)',
     description: 'HVUT 2290 is an annual federal tax paid by owners of heavy vehicles weighing 55,000 pounds or more, used on public highways.',
   },
@@ -391,7 +399,7 @@ const truckingServiceCards = [
     description: 'For hire tags are required for vehicles like limousines and Uber Black, ensuring legal operation and meeting licensing and insurance standards.',
   },
   {
-    icon: '🏥',
+    imageSrc: '/images/trucking/ambulance.svg',
     title: 'NMC (Non-Emergency Medical Transportation)',
     description: 'NMC provides transport for individuals who need medical care but are not in an emergency, ensuring safe and reliable travel.',
   },

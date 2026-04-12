@@ -73,7 +73,7 @@ export default function Navbar() {
             </NavDropdown> */}
 
             <NavLink href="/industries">Industries</NavLink>
-            <NavLink href="/pricing">Pricing</NavLink>
+            {/* <NavLink href="/pricing">Pricing</NavLink> */}
             <NavLink href="/about">About</NavLink>
           </div>
 
