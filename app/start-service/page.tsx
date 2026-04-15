@@ -46,29 +46,39 @@ function StartServicePageContent() {
   const selectedService = searchParams.get('type') || 'tax';
   const [activeService, setActiveService] = useState(selectedService);
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File[]>>({});
+  const [uploadedUrls, setUploadedUrls] = useState<Record<string, string[]>>({});
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ServiceFormData>();
   const [step, setStep] = useState(1);
 
   const selectedDocs = documentCategories[activeService as keyof typeof documentCategories] || [];
 
-  const onSubmit = async (data: ServiceFormData) => {
-    if (step === 1) {
-      setStep(2);
-      return;
-    }
+ const onSubmit = async (data: ServiceFormData) => {
+  if (step === 1) {
+    setStep(2);
+    return;
+  }
 
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log('Form data:', data);
-      console.log('Uploaded files:', uploadedFiles);
-      toast.success('Service request submitted! We\'ll contact you within 24 hours.');
-      setStep(1);
-      setUploadedFiles({});
-    } catch (error) {
-      toast.error('Failed to submit. Please try again.');
-    }
-  };
+  try {
+    const response = await fetch('/api/service-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...data,
+        serviceType: activeService,
+        uploadedFiles: uploadedUrls,
+      }),
+    });
+
+    if (!response.ok) throw new Error('Failed to submit');
+
+    toast.success("Service request submitted! We'll contact you within 24 hours.");
+    setStep(1);
+    setUploadedFiles({});
+    setUploadedUrls({});
+  } catch (error) {
+    toast.error('Failed to submit. Please try again.');
+  }
+};
 
   const handleFileSelect = (files: FileList, category: string) => {
     setUploadedFiles({
@@ -76,6 +86,13 @@ function StartServicePageContent() {
       [category]: Array.from(files),
     });
   };
+
+  const handleUploadComplete = (urls: string[], category: string) => {
+  setUploadedUrls((prev) => ({
+    ...prev,
+    [category]: [...(prev[category] || []), ...urls],
+  }));
+};
 
   const getTotalFiles = () => {
     return Object.values(uploadedFiles).reduce((total, files) => total + files.length, 0);
@@ -188,9 +205,10 @@ function StartServicePageContent() {
                     {selectedDocs.map((docType) => (
                       <div key={docType}>
                         <FileUpload
-                          category={docType}
+                         category={docType}
                           label={docType}
                           onFilesSelected={handleFileSelect}
+                          onUploadComplete={handleUploadComplete}
                         />
                       </div>
                     ))}
