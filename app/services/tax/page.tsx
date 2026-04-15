@@ -67,18 +67,26 @@ export default function TaxServicesPage() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {simpleTaxServices.map((service, index) => (
-              <motion.div key={index} variants={itemVariants}>
-                <ServiceCard
-                  // icon={service.icon}
-                  title={service.title}
-                  description={service.description}
-                  showContactButton={true}
-                  contactButtonText="Questions?"
-                  contactButtonHref="/contact"
-                />
-              </motion.div>
-            ))}
+           {simpleTaxServices.map((service, index) => {
+  // Determine button text based on service title
+  let buttonText = 'Questions?'; // fallback
+  if (service.title === 'Individual Tax') buttonText = 'Start Filing Now';
+  if (service.title === 'Small Business Tax Filing') buttonText = 'Consult our expert';
+  if (service.title === 'Self Employed Tax Filing') buttonText = 'Get Help';
+
+  return (
+    <motion.div key={index} variants={itemVariants}>
+      <ServiceCard
+        // icon={service.icon}  // uncomment if you want to display icons
+        title={service.title}
+        description={service.description}
+        showContactButton={true}
+        contactButtonText={buttonText}  // dynamic text
+        contactButtonHref="/contact"
+      />
+    </motion.div>
+  );
+})}
           </motion.div>
         </div>
       </section>
