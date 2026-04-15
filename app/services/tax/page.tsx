@@ -3,6 +3,7 @@
 import { FiArrowRight, FiCheck } from 'react-icons/fi';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import ServiceCard from '@/app/components/ServiceCard';
 
 export default function TaxServicesPage() {
   const containerVariants = {
@@ -41,7 +42,48 @@ export default function TaxServicesPage() {
         </div>
       </motion.section>
 
-      {/* Tax Service Categories */}
+      {/* Find the Right Tax Filing Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-[#040C33] mb-4">
+              Find the Right Tax Filing for You:
+            </h2>
+            <p className="text-xl text-gray-600">
+              Simplify Your Tax Journey Today!
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {simpleTaxServices.map((service, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <ServiceCard
+                  icon={service.icon}
+                  title={service.title}
+                  description={service.description}
+                  showContactButton={true}
+                  contactButtonText="Questions?"
+                  contactButtonHref="/contact"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Tax Service Categories 
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -88,7 +130,7 @@ export default function TaxServicesPage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Why Choose Our Tax Services */}
       <motion.section
@@ -99,7 +141,7 @@ export default function TaxServicesPage() {
         viewport={{ once: true }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">Why Choose Our Tax Services?</h2>
+          <h2 className="text-4xl font-bold text-gray-600 text-center mb-12">Why Choose Our Tax Services?</h2>
 
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 gap-8"
@@ -130,7 +172,7 @@ export default function TaxServicesPage() {
         viewport={{ once: true }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">Our Process</h2>
+          <h2 className="text-4xl font-bold text-center text-gray-600 mb-12">Our Process</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {process.map((step, index) => (
@@ -176,56 +218,56 @@ export default function TaxServicesPage() {
   );
 }
 
-const taxServices = [
-  {
-    icon: '👤',
-    title: 'Individual Tax Filing',
-    description: 'Comprehensive tax filing for employees and individuals',
-    items: [
-      'W-2 Tax Filing',
-      '1099 Contractor Taxes',
-      'Small business owner/operator taxes',
-      'Uber/Ride-Share Driver Taxes',
-      'Amended Tax Returns',
-    ],
-  },
-  {
-    icon: '🏢',
-    title: 'Business Tax Services',
-    description: 'Tax solutions tailored for growing businesses',
-    items: [
-      'Sole Proprietor Taxes',
-      'LLC Tax Filing',
-      'Partnership Tax Returns',
-      'Business Tax Planning',
-      'Bookkeeping Services',
-    ],
-  },
-  {
-    icon: '💼',
-    title: 'Self-Employed Tax Services',
-    description: 'We understand the unique needs of freelancers',
-    items: [
-      'Freelancer Taxes',
-      'Independent Contractor Taxes',
-      'Estimated Quarterly Taxes',
-      'Deduction Optimization',
-      'Tax Planning',
-    ],
-  },
-  {
-    icon: '🔧',
-    title: 'Additional Tax Services',
-    description: 'Expert assistance for complex tax situations',
-    items: [
-      'IRS Audit Assistance',
-      'Tax Planning & Strategy',
-      'ITIN Application',
-      'Tax Consultation',
-      'Amended Returns',
-    ],
-  },
-];
+// const taxServices = [
+//   {
+//     icon: '👤',
+//     title: 'Individual Tax Filing',
+//     description: 'Comprehensive tax filing for employees and individuals',
+//     items: [
+//       'W-2 Tax Filing',
+//       '1099 Contractor Taxes',
+//       'Small business owner/operator taxes',
+//       'Uber/Ride-Share Driver Taxes',
+//       'Amended Tax Returns',
+//     ],
+//   },
+//   {
+//     icon: '🏢',
+//     title: 'Business Tax Services',
+//     description: 'Tax solutions tailored for growing businesses',
+//     items: [
+//       'Sole Proprietor Taxes',
+//       'LLC Tax Filing',
+//       'Partnership Tax Returns',
+//       'Business Tax Planning',
+//       'Bookkeeping Services',
+//     ],
+//   },
+//   {
+//     icon: '💼',
+//     title: 'Self-Employed Tax Services',
+//     description: 'We understand the unique needs of freelancers',
+//     items: [
+//       'Freelancer Taxes',
+//       'Independent Contractor Taxes',
+//       'Estimated Quarterly Taxes',
+//       'Deduction Optimization',
+//       'Tax Planning',
+//     ],
+//   },
+//   {
+//     icon: '🔧',
+//     title: 'Additional Tax Services',
+//     description: 'Expert assistance for complex tax situations',
+//     items: [
+//       'IRS Audit Assistance',
+//       'Tax Planning & Strategy',
+//       'ITIN Application',
+//       'Tax Consultation',
+//       'Amended Returns',
+//     ],
+//   },
+// ];
 
 const benefits = [
   {
@@ -276,5 +318,23 @@ const process = [
   {
     title: 'File',
     description: 'E-file with IRS and receive confirmation',
+  },
+];
+
+const simpleTaxServices = [
+  {
+    icon: '👤',
+    title: 'Individual Tax',
+    description: 'Simplify your individual tax filing by understanding deductions, credits, and exemptions. Maximize your refund and avoid mistakes.',
+  },
+  {
+    icon: '🏢',
+    title: 'Small Business Tax Filing',
+    description: 'Manage your small business taxes with ease by handling deductions, employee taxes, and staying compliant with local and federal rules.',
+  },
+  {
+    icon: '💼',
+    title: 'Self Employed Tax Filing',
+    description: 'Stay on top of self-employment taxes by tracking income, expenses, and claiming deductions to minimize tax liability.',
   },
 ];
