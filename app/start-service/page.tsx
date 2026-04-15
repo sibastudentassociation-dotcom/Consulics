@@ -88,7 +88,7 @@ function StartServicePageContent() {
       <Toaster />
 
       {/* Header */}
-      <section className="bg-primary-700 text-white py-16">
+      <section className="bg-primary-700 text-grey py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold mb-4">Get Started</h1>
           <p className="text-xl text-gray-100">Choose your service and complete the form</p>
@@ -124,7 +124,7 @@ function StartServicePageContent() {
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-lg p-8">
               {step === 1 ? (
                 <>
-                  <h2 className="text-2xl font-bold mb-6">Step 1: Your Information</h2>
+                  <h2 className="text-2xl text-gray-700 font-bold mb-6">Step 1: Your Information</h2>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div>
@@ -132,7 +132,7 @@ function StartServicePageContent() {
                       <input
                         type="text"
                         {...register('firstName', { required: 'First name is required' })}
-                        className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="John"
                       />
                       {errors.firstName && <p className="text-red-600 text-sm mt-1">{errors.firstName.message}</p>}
@@ -143,7 +143,7 @@ function StartServicePageContent() {
                       <input
                         type="text"
                         {...register('lastName', { required: 'Last name is required' })}
-                        className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full border text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="Doe"
                       />
                       {errors.lastName && <p className="text-red-600 text-sm mt-1">{errors.lastName.message}</p>}
@@ -155,7 +155,7 @@ function StartServicePageContent() {
                     <input
                       type="email"
                       {...register('email', { required: 'Email is required' })}
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full border text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="john@example.com"
                     />
                     {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
@@ -166,7 +166,7 @@ function StartServicePageContent() {
                     <input
                       type="tel"
                       {...register('phone', { required: 'Phone is required' })}
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full border text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="(555) 123-4567"
                     />
                     {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>}
@@ -209,7 +209,7 @@ function StartServicePageContent() {
                     <textarea
                       {...register('comments')}
                       rows={4}
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full border text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="Any additional information you'd like to share..."
                     ></textarea>
                   </div>
