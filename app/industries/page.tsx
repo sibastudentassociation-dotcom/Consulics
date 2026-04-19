@@ -7,7 +7,7 @@ import Link from 'next/link';
 interface Industry {
   title: string;
   description: string;
-  icon: string;
+  // icon: string;
   services: string[];
   link: string;
 }
@@ -16,44 +16,44 @@ const industries: Industry[] = [
   {
     title: 'Salaried Employees',
     description: 'Simple and straightforward tax filing for W-2 income earners',
-    icon: '👔',
+    // icon: '👔',
     services: ['W-2 Tax Filing', 'Tax Planning', 'Amended Returns'],
-    link: '/services/tax/individual',
+    link: '/contact',
   },
   {
     title: 'Taxi & Cab Drivers',
     description: 'Specialized tax services for taxi drivers and fleet operators',
-    icon: '🚕',
+    // icon: '🚕',
     services: ['Vehicle Expense Tracking', 'Self-Employment Taxes', 'Deductions Optimization'],
-    link: '/services/tax/drivers',
+   link: '/contact',
   },
   {
     title: 'Ride-Share Drivers',
     description: 'Complete tax solutions for Uber, Lyft, and other ride-sharing drivers',
-    icon: '🚗',
+    // icon: '🚗',
     services: ['1099 Tax Filing', 'Mileage Tracking', 'Expense Management'],
-    link: '/services/tax/rideshare',
+    link: '/contact',
   },
   {
     title: 'Owner Operator Drivers',
     description: 'Comprehensive tax and compliance services for independent truckers',
-    icon: '🚛',
+    // icon: '🚛',
     services: ['IFTA Filing', 'IRP Registration', 'Heavy Vehicle Tax (Form 2290)'],
-    link: '/services/trucking/owner-operator',
+   link: '/contact',
   },
   {
     title: 'Trucking Companies',
     description: 'Full suite of compliance and tax services for trucking businesses',
-    icon: '🏢',
+    // icon: '🏢',
     services: ['DOT Compliance', 'UCR Registration', 'IFTA Fleet Management'],
-    link: '/services/trucking/company',
+    link: '/contact',
   },
   {
     title: 'Small Business Owners',
     description: 'All-in-one tax and business services for growing companies',
-    icon: '💼',
+    // icon: '💼',
     services: ['Business Tax Returns', 'Bookkeeping', 'Payroll Services'],
-    link: '/services/tax/business',
+    link: '/contact',
   },
 ];
 
@@ -114,10 +114,10 @@ export default function IndustriesPage() {
                 variants={itemVariants}
                 className="bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden"
               >
-                <div className="bg-gradient-to-br from-primary-700 to-primary-900 px-6 py-12 text-center">
+                {/* <div className="bg-gradient-to-br from-primary-700 to-primary-900 px-6 py-12 text-center">
                   <div className="text-6xl mb-4">{industry.icon}</div>
-                </div>
-
+                </div> */}
+              
                 <div className="p-6">
                   <h3 className="text-2xl font-bold text-gray-900 mb-3">{industry.title}</h3>
                   <p className="text-gray-600 mb-6">{industry.description}</p>
