@@ -34,6 +34,22 @@ const documentCategories = {
     'County Tax Documents',
     'Other',
   ],
+  ifta: [
+    'Fuel Purchase Receipts',
+    'Trip Sheets/Logs',
+    'Vehicle Mileage Records',
+    'Previous IFTA Reports',
+    'Fuel Tax Permits',
+    'Other IFTA Documents',
+  ],
+  irp: [
+    'Vehicle Registration Documents',
+    'Proof of Insurance',
+    'Lease Agreements (if applicable)',
+    'Weight Receipts',
+    'Previous IRP Registration',
+    'Other IRP Documents',
+  ],
 };
 
 const services = [
@@ -159,7 +175,7 @@ function StartServicePageContent() {
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-lg p-8">
               {step === 1 ? (
                 <>
-                  <h2 className="text-2xl font-bold mb-6">Step 1: Your Information</h2>
+                  <h2 className="text-2xl text-gray-700 font-bold mb-6">Step 1: Your Information</h2>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div>
@@ -167,7 +183,7 @@ function StartServicePageContent() {
                       <input
                         type="text"
                         {...register('firstName', { required: 'First name is required' })}
-                        className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full border  text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="John"
                       />
                       {errors.firstName && <p className="text-red-600 text-sm mt-1">{errors.firstName.message}</p>}
@@ -178,7 +194,7 @@ function StartServicePageContent() {
                       <input
                         type="text"
                         {...register('lastName', { required: 'Last name is required' })}
-                        className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full border   text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         placeholder="Doe"
                       />
                       {errors.lastName && <p className="text-red-600 text-sm mt-1">{errors.lastName.message}</p>}
@@ -190,7 +206,7 @@ function StartServicePageContent() {
                     <input
                       type="email"
                       {...register('email', { required: 'Email is required' })}
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full border   text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="john@example.com"
                     />
                     {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
@@ -201,7 +217,7 @@ function StartServicePageContent() {
                     <input
                       type="tel"
                       {...register('phone', { required: 'Phone is required' })}
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full border  text-gray-700 border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="(555) 123-4567"
                     />
                     {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>}
@@ -216,7 +232,7 @@ function StartServicePageContent() {
                 </>
               ) : (
                 <>
-                  <h2 className="text-2xl font-bold mb-6">Step 2: Upload Documents</h2>
+                  <h2 className="text-2xl  text-gray-700 font-bold mb-6">Step 2: Upload Documents</h2>
                   <p className="text-gray-600 mb-6">
                     Please upload the following documents for {services.find(s => s.id === activeService)?.label}
                   </p>
@@ -245,7 +261,7 @@ function StartServicePageContent() {
                     <textarea
                       {...register('comments')}
                       rows={4}
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full  text-gray-700 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="Any additional information you'd like to share..."
                     ></textarea>
                   </div>
@@ -302,7 +318,6 @@ function StartServicePageContent() {
             viewport={{ once: true }}
           >
             {businessTypeCards.map((card, index) => {
-              // Dynamic button text per card
               let buttonText = 'Get started →';
               if (card.title === 'EIN (Employer Identification Number)') buttonText = 'Get yours now →';
               if (card.title === 'Sole Proprietorship') buttonText = 'Start today →';
@@ -361,7 +376,7 @@ export default function StartServicePage() {
 const businessTypeCards = [
   {
     title: 'EIN (Employer Identification Number)',
-    description: 'An EIN is a unique identifier for businesses, used to file taxes and manage employee payroll.',
+    description: 'A unique identifier for businesses, used to file taxes and manage employee payroll.',
   },
   {
     title: 'Sole Proprietorship',

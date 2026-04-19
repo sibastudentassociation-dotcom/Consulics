@@ -41,7 +41,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white from-primary-700 to-primary-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white bg-whitenpm run dev from-primary-700 to-primary-900 flex items-center justify-center px-4">
       <Toaster />
 
       <div className="w-full max-w-sm">
