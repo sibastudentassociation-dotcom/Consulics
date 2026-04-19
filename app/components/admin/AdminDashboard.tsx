@@ -69,7 +69,12 @@ export default function AdminDashboard() {
 
   const exportCsv = (filename: string, rows: Record<string, any>[]) => {
     const headers = rows.length ? Object.keys(rows[0]) : [];
-    const csvContent = [headers.join(','), ...rows.map((row) => headers.map((header) => `"${String(row[header] ?? '')}"`).join(','))].join('\n');
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) =>
+        headers.map((header) => `"${String(row[header] ?? '')}"`).join(',')
+      ),
+    ].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
@@ -78,6 +83,33 @@ export default function AdminDashboard() {
     link.click();
     URL.revokeObjectURL(url);
   };
+
+const handleDownload = async (url: string, index: number) => {
+  try {
+    const res = await fetch('/api/admin/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ url }),
+    });
+
+    if (res.ok) {
+      const { downloadUrl } = await res.json();
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = downloadUrl.split('/').pop()?.split('?')[0] || 'document';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      alert('Download failed. Please try again.');
+    }
+  } catch (error) {
+    console.error('Download error:', error);
+    alert('Something went wrong.');
+  }
+};
+
 
   const serviceTypeLabel: Record<string, string> = {
     tax: 'File My Taxes',
@@ -337,17 +369,15 @@ export default function AdminDashboard() {
                               <div key={category}>
                                 <p className="text-xs font-medium text-gray-600 mb-1">{category}:</p>
                                 <div className="space-y-1">
-                                  {(urls as string[]).map((url, i) => (<a
-                                    
+                                  {(urls as string[]).map((url, i) => (
+                                    <button
                                       key={i}
-                                      href={url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
+                                      onClick={() => handleDownload(url, i)}
                                       className="flex items-center gap-2 text-sm text-primary-600 hover:underline"
                                     >
                                       <FiFileText size={14} />
-                                      Document {i + 1}
-                                    </a>
+                                      Download Document {i + 1}
+                                    </button>
                                   ))}
                                 </div>
                               </div>

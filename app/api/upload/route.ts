@@ -20,18 +20,25 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const result = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        {
-          folder: `consulics/${category}`,
-          resource_type: 'auto',
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      ).end(buffer);
-    });
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    // PDF ke liye image resource type use karo
+    const resourceType = (ext === 'pdf') ? 'image' : 'raw';
+const result = await new Promise((resolve, reject) => {
+  cloudinary.uploader.upload_stream(
+    {
+      folder: `consulics/${category}`,
+      resource_type: 'auto', // ← 'image' ki jagah 'auto'
+      type: 'upload',
+      access_mode: 'public',
+      use_filename: true,      // ← original filename use karo
+      unique_filename: true,
+    },
+    (error, result) => {
+      if (error) reject(error);
+      else resolve(result);
+    }
+  ).end(buffer);
+});
 
     return NextResponse.json({ url: (result as any).secure_url });
   } catch (error: any) {
