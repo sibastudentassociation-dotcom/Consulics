@@ -61,28 +61,39 @@ function StartServicePageContent() {
   const selectedService = searchParams.get('type') || 'tax';
   const [activeService, setActiveService] = useState(selectedService);
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File[]>>({});
+  const [uploadedUrls, setUploadedUrls] = useState<Record<string, string[]>>({});
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ServiceFormData>();
   const [step, setStep] = useState(1);
 
   const selectedDocs = documentCategories[activeService as keyof typeof documentCategories] || [];
 
-  const onSubmit = async (data: ServiceFormData) => {
-    if (step === 1) {
-      setStep(2);
-      return;
-    }
+ const onSubmit = async (data: ServiceFormData) => {
+  if (step === 1) {
+    setStep(2);
+    return;
+  }
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log('Form data:', data);
-      console.log('Uploaded files:', uploadedFiles);
-      toast.success("Service request submitted! We'll contact you within 24 hours.");
-      setStep(1);
-      setUploadedFiles({});
-    } catch (error) {
-      toast.error('Failed to submit. Please try again.');
-    }
-  };
+  try {
+    const response = await fetch('/api/service-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...data,
+        serviceType: activeService,
+        uploadedFiles: uploadedUrls,
+      }),
+    });
+
+    if (!response.ok) throw new Error('Failed to submit');
+
+    toast.success("Service request submitted! We'll contact you within 24 hours.");
+    setStep(1);
+    setUploadedFiles({});
+    setUploadedUrls({});
+  } catch (error) {
+    toast.error('Failed to submit. Please try again.');
+  }
+};
 
   const handleFileSelect = (files: FileList, category: string) => {
     setUploadedFiles({
@@ -90,6 +101,13 @@ function StartServicePageContent() {
       [category]: Array.from(files),
     });
   };
+
+  const handleUploadComplete = (urls: string[], category: string) => {
+  setUploadedUrls((prev) => ({
+    ...prev,
+    [category]: [...(prev[category] || []), ...urls],
+  }));
+};
 
   const getTotalFiles = () => {
     return Object.values(uploadedFiles).reduce((total, files) => total + files.length, 0);
@@ -134,6 +152,129 @@ function StartServicePageContent() {
                 {service.label}
               </button>
             ))}
+          </div>
+
+          {/* Form */}
+          <div className="max-w-3xl mx-auto">
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-lg p-8">
+              {step === 1 ? (
+                <>
+                  <h2 className="text-2xl font-bold mb-6">Step 1: Your Information</h2>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                      <input
+                        type="text"
+                        {...register('firstName', { required: 'First name is required' })}
+                        className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="John"
+                      />
+                      {errors.firstName && <p className="text-red-600 text-sm mt-1">{errors.firstName.message}</p>}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                      <input
+                        type="text"
+                        {...register('lastName', { required: 'Last name is required' })}
+                        className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="Doe"
+                      />
+                      {errors.lastName && <p className="text-red-600 text-sm mt-1">{errors.lastName.message}</p>}
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                    <input
+                      type="email"
+                      {...register('email', { required: 'Email is required' })}
+                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="john@example.com"
+                    />
+                    {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                    <input
+                      type="tel"
+                      {...register('phone', { required: 'Phone is required' })}
+                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="(555) 123-4567"
+                    />
+                    {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-primary-700 text-white py-3 rounded font-semibold hover:bg-primary-800 transition"
+                  >
+                    Next: Upload Documents
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h2 className="text-2xl font-bold mb-6">Step 2: Upload Documents</h2>
+                  <p className="text-gray-600 mb-6">
+                    Please upload the following documents for {services.find(s => s.id === activeService)?.label}
+                  </p>
+
+                  <div className="space-y-8 mb-8">
+                    {selectedDocs.map((docType) => (
+                      <div key={docType}>
+                        <FileUpload
+                         category={docType}
+                          label={docType}
+                          onFilesSelected={handleFileSelect}
+                          onUploadComplete={handleUploadComplete}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-6">
+                    <p className="text-sm text-blue-700">
+                      <strong>Documents uploaded: {getTotalFiles()}</strong>
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional Comments</label>
+                    <textarea
+                      {...register('comments')}
+                      rows={4}
+                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="Any additional information you'd like to share..."
+                    ></textarea>
+                  </div>
+
+                  <div className="flex gap-4 mt-8">
+                    <button
+                      type="button"
+                      onClick={() => setStep(1)}
+                      className="flex-1 border-2 border-primary-700 text-primary-700 py-3 rounded font-semibold hover:bg-primary-50 transition"
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 bg-accent-500 text-white py-3 rounded font-semibold hover:bg-accent-600 transition disabled:opacity-50"
+                    >
+                      {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                    </button>
+                  </div>
+                </>
+              )}
+            </form>
+
+            {/* Progress Indicator */}
+            <div className="flex justify-center gap-4 mt-8">
+              <div className={`h-2 w-12 rounded ${step === 1 ? 'bg-primary-700' : 'bg-gray-300'}`}></div>
+              <div className={`h-2 w-12 rounded ${step === 2 ? 'bg-primary-700' : 'bg-gray-300'}`}></div>
+            </div>
           </div>
         </div>
       </section>
