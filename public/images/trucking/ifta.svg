@@ -1,0 +1,23 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#e8e8e8" rx="8"/>
+  
+  <!-- IFTA tag main square -->
+  <rect x="20" y="20" width="160" height="160" fill="#0052CC" stroke="#333" stroke-width="2" rx="4"/>
+  
+  <!-- Zone/ID section -->
+  <text x="100" y="70" text-anchor="middle" font-size="28" font-weight="bold" fill="white" font-family="Arial, sans-serif">I</text>
+  
+  <!-- State abbreviation section -->
+  <text x="100" y="110" text-anchor="middle" font-size="28" font-weight="bold" fill="white" font-family="Arial, sans-serif">IL</text>
+  
+  <!-- Zone number -->
+  <text x="100" y="155" text-anchor="middle" font-size="32" font-weight="bold" fill="white" font-family="Arial, sans-serif">25</text>
+  
+  <!-- Decorative lines -->
+  <line x1="40" y1="85" x2="160" y2="85" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  <line x1="40" y1="125" x2="160" y2="125" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  
+  <!-- Optional label -->
+  <text x="100" y="185" text-anchor="middle" font-size="11" fill="#333" font-family="Arial, sans-serif" font-weight="bold">IFTA Registration</text>
+</svg>

@@ -5,6 +5,13 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import ServiceCard from '@/app/components/ServiceCard';
 
+interface TruckingServiceCard {
+  // icon?: string;
+  imageSrc?: string;
+  title: string;
+  description: string;
+}
+
 export default function TruckingServicesPage() {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -73,7 +80,8 @@ export default function TruckingServicesPage() {
                 viewport={{ once: true }}
               >
                 <ServiceCard
-                  icon={card.icon}
+                  // icon={card.icon}
+                  imageSrc={card.imageSrc}
                   title={card.title}
                   description={card.description}
                   showContactButton={true}
@@ -349,50 +357,50 @@ const benefits = [
   },
 ];
 
-const truckingServiceCards = [
+const truckingServiceCards: TruckingServiceCard[] = [
   {
-    icon: '🔢',
+    // icon: '🔢',
     title: 'USDOT',
-    description: 'Obtain your USDOT number for operating commercial vehicles interstate.',
+    description: 'A USDOT number is a unique identifier issued by the Federal Motor Carrier Safety Administration for interstate commercial vehicles.',
   },
   {
-    icon: '📋',
+    // icon: '📋',
     title: 'Operating Authority',
-    description: 'Get your motor carrier operating authority from the FMCSA.',
+    description: 'Operating Authority allows a trucking company to legally transport freight across state lines, issued by the FMCSA.',
   },
   {
-    icon: '⛽',
+    // imageSrc: '/images/trucking/ifta.svg',
     title: 'IFTA',
-    description: 'International Fuel Tax Agreement registration and quarterly filings.',
+    description: 'IFTA is an agreement between states to simplify fuel tax reporting for interstate trucking companies, based on miles traveled.',
   },
   {
-    icon: '🚗',
+    // imageSrc: '/images/trucking/irp-trailer.svg',
     title: 'IRP',
-    description: 'International Registration Plan for apportioned registration.',
+    description: 'IRP is a registration program that allows trucking companies to operate across multiple states with a single vehicle registration.',
   },
   {
-    icon: '🏷️',
+    // imageSrc: '/images/trucking/apportioned-tags.svg',
     title: 'Apportioned Tags',
-    description: 'Vehicle registration tags for interstate operations.',
+    description: 'Apportioned tags are license plates that allow a commercial vehicle to operate in multiple states, with fees based on mileage.',
   },
   {
-    icon: '📄',
+    // icon: '📄',
     title: 'For Hire Tags',
-    description: 'Intrastate carrier registration and permits.',
+    description: 'For hire tags indicate that a vehicle is used for transporting goods or passengers for compensation, requiring specific licensing.',
   },
   {
-    icon: '💵',
-    title: 'HVUT 2290 (HVUT)',
-    description: 'Heavy Vehicle Use Tax form 2290 filing for trucks over 55,000 lbs.',
+    // imageSrc: '/images/trucking/form-2290.svg',
+    title: 'HVUT 2290 (Heavy Vehicle Use Tax Form 2290)',
+    description: 'HVUT 2290 is an annual federal tax paid by owners of heavy vehicles weighing 55,000 pounds or more, used on public highways.',
   },
   {
-    icon: '🚕',
-    title: 'Limousine / Taxi Service',
-    description: 'Licensing and compliance for luxury sedan and taxi services.',
+    // icon: '🚕',
+    title: 'Limousine, Taxi service',
+    description: 'For hire tags are required for vehicles like limousines and Uber Black, ensuring legal operation and meeting licensing and insurance standards.',
   },
   {
-    icon: '🏥',
+    // imageSrc: '/images/trucking/ambulance.svg',
     title: 'NMC (Non-Emergency Medical Transportation)',
-    description: 'NEMT provider registration and compliance requirements.',
+    description: 'NMC provides transport for individuals who need medical care but are not in an emergency, ensuring safe and reliable travel.',
   },
 ];

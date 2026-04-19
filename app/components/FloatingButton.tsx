@@ -27,7 +27,7 @@ export default function FloatingButton() {
 
       {/* Appointment Button - Bottom Right */}
       <motion.div
-        className="fixed bottom-6 right-6 z-40"
+        className="fixed bottom-6 left-6 z-40"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.7, type: 'spring', stiffness: 260, damping: 20 }}

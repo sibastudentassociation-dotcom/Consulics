@@ -1,0 +1,21 @@
+<svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+  <!-- Document background -->
+  <rect width="200" height="280" fill="#ffffff" stroke="#999" stroke-width="2"/>
+  
+  <!-- Document header bar -->
+  <rect width="200" height="45" fill="#003366"/>
+  <text x="100" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">Department of the Treasury</text>
+  
+  <!-- Title section -->
+  <text x="100" y="85" text-anchor="middle" font-size="16" fill="#333" font-family="Arial, sans-serif" font-weight="normal">Form</text>
+  <text x="100" y="145" text-anchor="middle" font-size="72" font-weight="bold" fill="#000" font-family="Arial, sans-serif">2290</text>
+  
+  <!-- Revision info -->
+  <text x="100" y="175" text-anchor="middle" font-size="12" fill="#555" font-family="Arial, sans-serif">(Rev. July 2025)</text>
+  
+  <!-- Form title -->
+  <text x="100" y="205" text-anchor="middle" font-size="13" fill="#333" font-family="Arial, sans-serif" font-weight="bold">Heavy Vehicle Use Tax Return</text>
+  
+  <!-- Agency footer -->
+  <text x="100" y="265" text-anchor="middle" font-size="10" fill="#555" font-family="Arial, sans-serif">Internal Revenue Service</text>
+</svg>

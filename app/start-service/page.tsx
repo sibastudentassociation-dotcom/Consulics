@@ -43,6 +43,19 @@ const services = [
   { id: 'irp', label: 'Register IRP', icon: '📋' },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, duration: 0.8 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
 function StartServicePageContent() {
   const searchParams = useSearchParams();
   const selectedService = searchParams.get('type') || 'tax';
@@ -105,17 +118,22 @@ function StartServicePageContent() {
       <Toaster />
 
       {/* Header */}
-      <section className="bg-primary-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <motion.section
+        className="bg-primary-700 text-white py-20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-5xl font-bold mb-4">Get Started</h1>
           <p className="text-xl text-gray-100">Choose your service and complete the form</p>
         </div>
-      </section>
+      </motion.section>
 
       {/* Service Selection */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          <div className="grid grid-cols-1 text-gray-900 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
             {services.map((service) => (
               <button
                 key={service.id}
@@ -278,30 +296,48 @@ function StartServicePageContent() {
 
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, staggerChildren: 0.1 }}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
           >
-            {businessTypeCards.map((card, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <ServiceCard
-                  icon={card.icon}
-                  title={card.title}
-                  description={card.description}
-                  showContactButton={true}
-                  contactButtonText="Questions?"
-                  contactButtonHref="/contact"
-                />
-              </motion.div>
-            ))}
+            {businessTypeCards.map((card, index) => {
+              // Dynamic button text per card
+              let buttonText = 'Get started →';
+              if (card.title === 'EIN (Employer Identification Number)') buttonText = 'Get yours now →';
+              if (card.title === 'Sole Proprietorship') buttonText = 'Start today →';
+              if (card.title === 'LLC (Limited Liability Company)') buttonText = 'Register now →';
+              if (card.title === 'S Corp') buttonText = 'File today →';
+              if (card.title === 'C Corp') buttonText = 'Incorporate now →';
+              if (card.title === 'Trucking Setup') buttonText = 'Get started →';
+
+              return (
+                <motion.div key={index} variants={itemVariants}>
+                  <ServiceCard
+                    title={card.title}
+                    description={card.description}
+                    showContactButton={true}
+                    contactButtonText={buttonText}
+                    contactButtonHref="/contact"
+                  />
+                </motion.div>
+              );
+            })}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-[#040C33] mb-4">
+            Use this space for a video clip or YouTube clip
+          </h2>
+          <div className="mx-auto max-w-4xl rounded-[2rem] border border-gray-200 bg-slate-950/5 p-8">
+            <div className="aspect-video rounded-[1.5rem] bg-slate-900/80 flex items-center justify-center text-slate-400">
+              Video placeholder
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -310,7 +346,13 @@ function StartServicePageContent() {
 
 export default function StartServicePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
       <StartServicePageContent />
     </Suspense>
   );
@@ -318,32 +360,26 @@ export default function StartServicePage() {
 
 const businessTypeCards = [
   {
-    icon: '🔢',
     title: 'EIN (Employer Identification Number)',
     description: 'An EIN is a unique identifier for businesses, used to file taxes and manage employee payroll.',
   },
   {
-    icon: '👤',
     title: 'Sole Proprietorship',
     description: 'A business owned and operated by one person with simplicity but personal liability risks.',
   },
   {
-    icon: '🏢',
     title: 'LLC (Limited Liability Company)',
     description: 'Provides liability protection with flexible tax options.',
   },
   {
-    icon: '📊',
     title: 'S Corp',
     description: 'Allows income pass-through taxation while offering limited liability protection.',
   },
   {
-    icon: '🏛️',
     title: 'C Corp',
     description: 'Separate legal entity taxed independently from shareholders.',
   },
   {
-    icon: '🚛',
     title: 'Trucking Setup',
     description: 'Registering, licensing, and compliance setup for trucking businesses.',
   },
