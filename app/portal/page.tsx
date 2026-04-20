@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiLogOut, FiDownload, FiCreditCard } from 'react-icons/fi';
 import toast, { Toaster } from 'react-hot-toast';
+import jsPDF from 'jspdf';
 
 interface Invoice {
   id: string;
@@ -65,24 +66,11 @@ export default function ClientPortal() {
           phone: data.user?.phone || '',
         });
 
-        setInvoices([
-          {
-            id: '1',
-            description: 'Tax Filing Service - 2024',
-            amount: 450,
-            dueDate: '2024-04-15',
-            status: 'paid',
-            date: '2024-03-15',
-          },
-          {
-            id: '2',
-            description: 'IFTA Registration',
-            amount: 320,
-            dueDate: '2024-05-20',
-            status: 'pending',
-            date: '2024-04-20',
-          },
-        ]);
+        const invoicesRes = await fetch('/api/user/invoices');
+if (invoicesRes.ok) {
+  const invoicesData = await invoicesRes.json();
+  setInvoices(invoicesData.invoices || []);
+}
 
         // Fetch real appointments
         const apptResponse = await fetch('/api/user/appointments');
@@ -106,23 +94,51 @@ export default function ClientPortal() {
   };
 
   const handlePayment = async (invoiceId: string) => {
-    const invoice = invoices.find((inv) => inv.id === invoiceId);
-    if (!invoice) return;
+  const invoice = invoices.find((inv) => inv.id === invoiceId);
+  if (!invoice) return;
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setInvoices(
-        invoices.map((inv) =>
-          inv.id === invoiceId ? { ...inv, status: 'paid' } : inv
-        )
-      );
-      setShowPaymentModal(false);
-      toast.success(`Payment of $${invoice.amount} processed successfully!`);
-    } catch (error) {
-      toast.error('Payment failed. Please try again.');
-    }
-  };
+  try {
+    // Fake 1.5 sec delay — payment processing simulation
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
+    // Firestore mein status update karo
+    const res = await fetch('/api/user/invoices', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ invoiceId }),
+    });
+
+    if (!res.ok) throw new Error('Payment failed');
+
+    // UI update karo
+    setInvoices(
+      invoices.map((inv) =>
+        inv.id === invoiceId ? { ...inv, status: 'paid' } : inv
+      )
+    );
+    setShowPaymentModal(false);
+    toast.success(`Payment of $${invoice.amount} processed successfully!`);
+  } catch (error) {
+    toast.error('Payment failed. Please try again.');
+  }
+};
+
+  const handleDownloadInvoice = (invoice: any) => {
+  const doc = new jsPDF();
+
+  doc.setFontSize(20);
+  doc.text('INVOICE', 105, 20, { align: 'center' });
+
+  doc.setFontSize(12);
+  doc.text(`Description: ${invoice.description}`, 20, 50);
+  doc.text(`Client: ${invoice.clientEmail || ''}`, 20, 60);
+  doc.text(`Amount: $${invoice.amount}`, 20, 70);
+  doc.text(`Due Date: ${invoice.dueDate}`, 20, 80);
+  doc.text(`Status: ${invoice.status}`, 20, 90);
+  doc.text(`Date Issued: ${invoice.createdAt?.split('T')[0] || ''}`, 20, 100);
+
+  doc.save(`invoice-${invoice.id}.pdf`);
+};
   const handleSaveProfile = async () => {
   setIsSaving(true);
   try {
@@ -219,7 +235,9 @@ export default function ClientPortal() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Total Paid</span>
-                  <span className="text-2xl font-bold text-green-600">$450</span>
+                  <span className="text-2xl font-bold text-green-600">
+  ${invoices.filter(inv => inv.status === 'paid').reduce((sum, inv) => sum + inv.amount, 0)}
+</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Amount Due</span>
@@ -274,9 +292,12 @@ export default function ClientPortal() {
                       </div>
 
                       <div className="flex gap-3">
-                        <button className="flex items-center gap-2 flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition">
-                          <FiDownload size={16} /> Download
-                        </button>
+                        <button
+  onClick={() => handleDownloadInvoice(invoice)}
+  className="flex items-center gap-2 flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition"
+>
+  <FiDownload size={16} /> Download
+</button>
                         <button
                           onClick={() => {
                             setSelectedInvoiceId(invoice.id);

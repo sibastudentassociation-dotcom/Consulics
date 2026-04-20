@@ -27,6 +27,14 @@ export default function AdminDashboard() {
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [serviceRequests, setServiceRequests] = useState<any[]>([]);
   const [expandedRequest, setExpandedRequest] = useState<string | null>(null);
+  const [invoices, setInvoices] = useState<any[]>([]);
+  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+  const [invoiceForm, setInvoiceForm] = useState({
+    clientEmail: '',
+    description: '',
+    amount: '',
+    dueDate: '',
+  });
 
   useEffect(() => {
     fetchStats();
@@ -34,12 +42,13 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const [servicesRes, projectsRes, leadsRes, appointmentsRes, serviceRequestsRes] = await Promise.all([
+      const [servicesRes, projectsRes, leadsRes, appointmentsRes, serviceRequestsRes, invoicesRes] = await Promise.all([
         fetch('/api/admin/services'),
         fetch('/api/projects'),
         fetch('/api/admin/leads'),
         fetch('/api/admin/appointments'),
         fetch('/api/admin/service-requests'),
+        fetch('/api/admin/invoices', { credentials: 'include' }),
       ]);
 
       const services = await servicesRes.json();
@@ -47,6 +56,7 @@ export default function AdminDashboard() {
       const leads = await leadsRes.json();
       const appointments = await appointmentsRes.json();
       const serviceRequestsData = await serviceRequestsRes.json();
+      const invoicesData = await invoicesRes.json();
 
       const newLeads = leads.inquiries.filter((lead: any) => lead.status === 'new').length;
       const pendingAppointments = appointments.appointments.filter((a: any) => a.status === 'pending').length;
@@ -54,6 +64,7 @@ export default function AdminDashboard() {
       setAppointments(appointments.appointments);
       setInquiries(leads.inquiries);
       setServiceRequests(serviceRequestsData.serviceRequests || []);
+      setInvoices(invoicesData.invoices || []);
       setStats({
         totalServices: services.services.length,
         totalProjects: projects.projects.length,
@@ -84,32 +95,26 @@ export default function AdminDashboard() {
     URL.revokeObjectURL(url);
   };
 
-const handleDownload = async (url: string, index: number) => {
-  try {
-    const res = await fetch('/api/admin/download', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ url }),
-    });
+  const handleDownload = async (url: string, index: number) => {
+    try {
+      const res = await fetch('/api/admin/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ url }),
+      });
 
-    if (res.ok) {
-      const { downloadUrl } = await res.json();
-      const a = document.createElement('a');
-      a.href = downloadUrl;
-      a.download = downloadUrl.split('/').pop()?.split('?')[0] || 'document';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } else {
-      alert('Download failed. Please try again.');
+      if (res.ok) {
+        const { downloadUrl } = await res.json();
+        window.open(downloadUrl, '_blank');
+      } else {
+        alert('Download failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Download error:', error);
+      alert('Something went wrong.');
     }
-  } catch (error) {
-    console.error('Download error:', error);
-    alert('Something went wrong.');
-  }
-};
-
+  };
 
   const serviceTypeLabel: Record<string, string> = {
     tax: 'File My Taxes',
@@ -376,7 +381,7 @@ const handleDownload = async (url: string, index: number) => {
                                       className="flex items-center gap-2 text-sm text-primary-600 hover:underline"
                                     >
                                       <FiFileText size={14} />
-                                      Download Document {i + 1}
+                                      View Document {i + 1}
                                     </button>
                                   ))}
                                 </div>
@@ -394,6 +399,116 @@ const handleDownload = async (url: string, index: number) => {
               <div className="mt-6">
                 <Button variant="ghost" onClick={fetchStats}>Refresh</Button>
               </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Invoices Section */}
+        <div className="mt-6">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Invoices</CardTitle>
+                <Button onClick={() => setShowInvoiceForm(!showInvoiceForm)}>
+                  {showInvoiceForm ? 'Cancel' : '+ Create Invoice'}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {showInvoiceForm && (
+                <div className="mb-6 p-5 border rounded-2xl space-y-4 bg-gray-50">
+                  <h3 className="text-sm font-semibold text-gray-700">New Invoice</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Client Email</label>
+                      <input
+                        type="email"
+                        placeholder="client@example.com"
+                        value={invoiceForm.clientEmail}
+                        onChange={(e) => setInvoiceForm({ ...invoiceForm, clientEmail: e.target.value })}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Service Description</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Tax Filing Service"
+                        value={invoiceForm.description}
+                        onChange={(e) => setInvoiceForm({ ...invoiceForm, description: e.target.value })}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Amount ($)</label>
+                      <input
+                        type="number"
+                        placeholder="0.00"
+                        value={invoiceForm.amount}
+                        onChange={(e) => setInvoiceForm({ ...invoiceForm, amount: e.target.value })}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Due Date</label>
+                      <input
+                        type="date"
+                        value={invoiceForm.dueDate}
+                        onChange={(e) => setInvoiceForm({ ...invoiceForm, dueDate: e.target.value })}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-3 pt-2">
+                    <Button variant="ghost" onClick={() => setShowInvoiceForm(false)}>Cancel</Button>
+                    <Button
+                      onClick={async () => {
+                        const res = await fetch('/api/admin/invoices', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          credentials: 'include',
+                          body: JSON.stringify(invoiceForm),
+                        });
+                        if (res.ok) {
+                          setShowInvoiceForm(false);
+                          setInvoiceForm({ clientEmail: '', description: '', amount: '', dueDate: '' });
+                          fetchStats();
+                        }
+                      }}
+                    >
+                      Save Invoice
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {invoices.length === 0 ? (
+                <p className="text-sm text-gray-500">No invoices yet.</p>
+              ) : (
+                <div className="space-y-3">
+                  {invoices.map((invoice) => (
+                    <div key={invoice.id} className="rounded-2xl border border-gray-200 p-4 bg-white hover:shadow-sm transition">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">{invoice.description}</p>
+                          <p className="text-sm text-gray-500">{invoice.clientEmail}</p>
+                          <p className="text-xs text-gray-400 mt-1">Due: {invoice.dueDate || 'N/A'}</p>
+                        </div>
+                        <div className="text-right flex flex-col items-end gap-2">
+                          <p className="text-lg font-bold text-gray-900">${invoice.amount}</p>
+                          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                            invoice.status === 'paid'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-yellow-100 text-yellow-800'
+                          }`}>
+                            {invoice.status}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
