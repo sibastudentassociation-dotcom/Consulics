@@ -131,10 +131,11 @@ export default function AppointmentPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-dark mb-2">First Name</label>
-                    <Input
+                    <Input text-gray-100
                       autoComplete="given-name"
                       {...register('firstName', { required: 'First name is required' })}
                       placeholder="John"
+                       className="text-gray-900"
                     />
                     {errors.firstName && <p className="text-red-600 text-sm mt-1">{errors.firstName.message}</p>}
                   </div>
@@ -144,6 +145,7 @@ export default function AppointmentPage() {
                       autoComplete="family-name"
                       {...register('lastName', { required: 'Last name is required' })}
                       placeholder="Doe"
+                       className="text-gray-900"
                     />
                     {errors.lastName && <p className="text-red-600 text-sm mt-1">{errors.lastName.message}</p>}
                   </div>
@@ -151,14 +153,15 @@ export default function AppointmentPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-dark mb-2">Email Address</label>
+                    <label className="block text-sm  font-medium text-dark mb-2">Email Address</label>
                     <Input
                       type="email"
                       autoComplete="email"
                       {...register('email', { required: 'Email is required' })}
                       placeholder="john@example.com"
+                       className="text-gray-900"
                     />
-                    {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
+                    {errors.email && <p className="text-red-600  text-sm mt-1">{errors.email.message}</p>}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-dark mb-2">Phone Number</label>
@@ -167,6 +170,7 @@ export default function AppointmentPage() {
                       autoComplete="tel"
                       {...register('phone', { required: 'Phone number is required' })}
                       placeholder="(555) 123-4567"
+                       className="text-gray-900"
                     />
                     {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>}
                   </div>
