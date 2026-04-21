@@ -1,15 +1,15 @@
 'use client';
 
-import { FiArrowRight, FiCheck } from 'react-icons/fi';
+import { FiArrowRight, FiCheck, FiHelpCircle } from 'react-icons/fi';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import ServiceCard from '@/app/components/ServiceCard';
 
 interface TruckingServiceCard {
-  // icon?: string;
   imageSrc?: string;
   title: string;
   description: string;
+  question?: string; // Dynamic question for each card
 }
 
 export default function TruckingServicesPage() {
@@ -80,68 +80,18 @@ export default function TruckingServicesPage() {
                 viewport={{ once: true }}
               >
                 <ServiceCard
-                  // icon={card.icon}
                   imageSrc={card.imageSrc}
                   title={card.title}
                   description={card.description}
                   showContactButton={true}
-                  contactButtonText="Questions?"
-                  contactButtonHref="/contact"
+                  contactButtonText={` ${card.question || 'How can we help?'}`}
+                  contactButtonHref={`/contact?service=${encodeURIComponent(card.title)}&question=${encodeURIComponent(card.question || '')}`}
                 />
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
-
-      {/* Trucking Service Categories */}
-      {/* <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-12"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {truckingServices.map((service, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="card-base hover:shadow-medium transition"
-              >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-heading">{service.title}</h3>
-                <p className="text-body mb-6">{service.description}</p>
-
-                <div className="space-y-3 mb-8">
-                  {service.items.map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <FiCheck className="text-accent-500 font-bold flex-shrink-0 mt-1" />
-                      <span className="text-gray-700">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex gap-3">
-                  <Link
-                    href="/start-service?type=trucking"
-                    className="flex-1 text-center bg-primary-700 text-white py-2 rounded hover:bg-primary-800 transition font-semibold flex items-center justify-center gap-2"
-                  >
-                    Get Started <FiArrowRight />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="flex-1 text-center border-2 border-primary-700 text-primary-700 py-2 rounded hover:bg-primary-50 transition font-semibold"
-                  >
-                    Consult
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section> */}
 
       {/* Important Deadlines */}
       <motion.section
@@ -359,48 +309,48 @@ const benefits = [
 
 const truckingServiceCards: TruckingServiceCard[] = [
   {
-    // icon: '🔢',
     title: 'USDOT',
     description: 'A USDOT number is a unique identifier issued by the Federal Motor Carrier Safety Administration for interstate commercial vehicles.',
+    question: 'How do I apply for a USDOT number?',
   },
   {
-    // icon: '📋',
     title: 'Operating Authority',
     description: 'Operating Authority allows a trucking company to legally transport freight across state lines, issued by the FMCSA.',
+    question: 'What is the process for obtaining Operating Authority?',
   },
   {
-    // imageSrc: '/images/trucking/ifta.svg',
     title: 'IFTA',
     description: 'IFTA is an agreement between states to simplify fuel tax reporting for interstate trucking companies, based on miles traveled.',
+    question: 'When are IFTA taxes due and how do I file them?',
   },
   {
-    // imageSrc: '/images/trucking/irp-trailer.svg',
     title: 'IRP',
     description: 'IRP is a registration program that allows trucking companies to operate across multiple states with a single vehicle registration.',
+    question: 'What documents are needed for IRP registration?',
   },
   {
-    // imageSrc: '/images/trucking/apportioned-tags.svg',
     title: 'Apportioned Tags',
     description: 'Apportioned tags are license plates that allow a commercial vehicle to operate in multiple states, with fees based on mileage.',
+    question: 'How are apportioned tag fees calculated?',
   },
   {
-    // icon: '📄',
     title: 'For Hire Tags',
     description: 'For hire tags indicate that a vehicle is used for transporting goods or passengers for compensation, requiring specific licensing.',
+    question: 'What are the requirements for for-hire tags?',
   },
   {
-    // imageSrc: '/images/trucking/form-2290.svg',
     title: 'HVUT 2290 (Heavy Vehicle Use Tax Form 2290)',
     description: 'HVUT 2290 is an annual federal tax paid by owners of heavy vehicles weighing 55,000 pounds or more, used on public highways.',
+    question: 'How do I file Form 2290 online?',
   },
   {
-    // icon: '🚕',
     title: 'Limousine, Taxi service',
     description: 'For hire tags are required for vehicles like limousines and Uber Black, ensuring legal operation and meeting licensing and insurance standards.',
+    question: 'What insurance requirements apply for limousine services?',
   },
   {
-    // imageSrc: '/images/trucking/ambulance.svg',
     title: 'NMC (Non-Emergency Medical Transportation)',
     description: 'NMC provides transport for individuals who need medical care but are not in an emergency, ensuring safe and reliable travel.',
+    question: 'What certifications are needed for NMC services?',
   },
 ];
