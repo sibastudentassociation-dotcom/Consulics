@@ -46,7 +46,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 text-white">
-            <Image src="/logo/1.png" alt="Consulics logo" width={40} height={40} />
+            <Image src="/logo/favicon_no_bg.png" alt="Consulics logo" width={40} height={40} />
             <span className="text-2xl font-bold tracking-tight">
               <span className="text-white">Consu</span>
               <span className="text-white">lics</span>

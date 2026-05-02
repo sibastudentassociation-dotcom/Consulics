@@ -3,9 +3,36 @@
 import { FiArrowRight, FiCheck } from 'react-icons/fi';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import ServiceCard from '@/app/components/ServiceCard';
 
 export default function TaxServicesPage() {
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user is logged in by checking localStorage token
+    const token = localStorage.getItem('auth_token');
+    setIsLoggedIn(!!token);
+    setLoading(false);
+  }, []);
+
+  const handleFileNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (loading) return;
+    
+    if (!isLoggedIn) {
+      // Store the intended destination
+      sessionStorage.setItem('redirectAfterLogin', '/start-service?type=tax');
+      router.push('/login');
+    } else {
+      router.push('/start-service?type=tax');
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -67,78 +94,27 @@ export default function TaxServicesPage() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-           {simpleTaxServices.map((service, index) => {
-  // Determine button text based on service title
-  let buttonText = 'Questions?'; // fallback
-  if (service.title === 'Individual Tax') buttonText = 'Start Filing Now';
-  if (service.title === 'Small Business Tax Filing') buttonText = 'Consult our expert';
-  if (service.title === 'Self Employed Tax Filing') buttonText = 'Get Help';
+            {simpleTaxServices.map((service, index) => {
+              let buttonText = 'Questions?';
+              if (service.title === 'Individual Tax') buttonText = 'Start Filing Now';
+              if (service.title === 'Small Business Tax Filing') buttonText = 'Consult our expert';
+              if (service.title === 'Self Employed Tax Filing') buttonText = 'Get Help';
 
-  return (
-    <motion.div key={index} variants={itemVariants}>
-      <ServiceCard
-        // icon={service.icon}  // uncomment if you want to display icons
-        title={service.title}
-        description={service.description}
-        showContactButton={true}
-        contactButtonText={buttonText}  // dynamic text
-        contactButtonHref="/contact"
-      />
-    </motion.div>
-  );
-})}
+              return (
+                <motion.div key={index} variants={itemVariants}>
+                  <ServiceCard
+                    title={service.title}
+                    description={service.description}
+                    showContactButton={true}
+                    contactButtonText={buttonText}
+                    contactButtonHref="/contact"
+                  />
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
-
-      {/* Tax Service Categories 
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-12"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {taxServices.map((service, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="card-base hover:shadow-medium transition"
-              >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-heading">{service.title}</h3>
-                <p className="text-body mb-6">{service.description}</p>
-
-                <div className="space-y-3 mb-8">
-                  {service.items.map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <FiCheck className="text-accent-500 font-bold flex-shrink-0 mt-1" />
-                      <span className="text-gray-700">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex gap-3">
-                  <Link
-                    href="/start-service?type=tax"
-                    className="flex-1 text-center bg-primary-700 text-white py-2 rounded hover:bg-primary-800 transition font-semibold flex items-center justify-center gap-2"
-                  >
-                    Get Started <FiArrowRight />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="flex-1 text-center border-2 border-primary-700 text-primary-700 py-2 rounded hover:bg-primary-50 transition font-semibold"
-                  >
-                    Consult
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section> */}
 
       {/* Why Choose Our Tax Services */}
       <motion.section
@@ -214,68 +190,23 @@ export default function TaxServicesPage() {
           <p className="text-xl text-gray-100 mb-8">
             Get started in minutes with our simple online form
           </p>
-          <Link
-            href="/start-service?type=tax"
-            className="inline-block bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded font-semibold transition"
-          >
-            File Now
-          </Link>
+          {loading ? (
+            <button className="inline-block bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded font-semibold transition opacity-75 cursor-wait">
+              Loading...
+            </button>
+          ) : (
+            <button
+              onClick={handleFileNow}
+              className="inline-block bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded font-semibold transition"
+            >
+              File Now
+            </button>
+          )}
         </div>
       </motion.section>
     </div>
   );
 }
-
-// const taxServices = [
-//   {
-//     icon: '👤',
-//     title: 'Individual Tax Filing',
-//     description: 'Comprehensive tax filing for employees and individuals',
-//     items: [
-//       'W-2 Tax Filing',
-//       '1099 Contractor Taxes',
-//       'Small business owner/operator taxes',
-//       'Uber/Ride-Share Driver Taxes',
-//       'Amended Tax Returns',
-//     ],
-//   },
-//   {
-//     icon: '🏢',
-//     title: 'Business Tax Services',
-//     description: 'Tax solutions tailored for growing businesses',
-//     items: [
-//       'Sole Proprietor Taxes',
-//       'LLC Tax Filing',
-//       'Partnership Tax Returns',
-//       'Business Tax Planning',
-//       'Bookkeeping Services',
-//     ],
-//   },
-//   {
-//     icon: '💼',
-//     title: 'Self-Employed Tax Services',
-//     description: 'We understand the unique needs of freelancers',
-//     items: [
-//       'Freelancer Taxes',
-//       'Independent Contractor Taxes',
-//       'Estimated Quarterly Taxes',
-//       'Deduction Optimization',
-//       'Tax Planning',
-//     ],
-//   },
-//   {
-//     icon: '🔧',
-//     title: 'Additional Tax Services',
-//     description: 'Expert assistance for complex tax situations',
-//     items: [
-//       'IRS Audit Assistance',
-//       'Tax Planning & Strategy',
-//       'ITIN Application',
-//       'Tax Consultation',
-//       'Amended Returns',
-//     ],
-//   },
-// ];
 
 const benefits = [
   {

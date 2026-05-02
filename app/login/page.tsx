@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -16,6 +16,16 @@ export default function LoginPage() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>();
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      const redirectTo = sessionStorage.getItem('redirectAfterLogin') || '/portal';
+      sessionStorage.removeItem('redirectAfterLogin');
+      router.push(redirectTo);
+    }
+  }, [router]);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -33,12 +43,15 @@ export default function LoginPage() {
 
       localStorage.setItem('auth_token', 'logged_in');
       toast.success('Logged in successfully!');
-      const role = responseData?.user?.role || responseData?.role;
-if (role === 'admin') {
-  window.location.href = '/admin';
-} else {
-  window.location.href = '/portal';
-}
+      
+      // Check for redirect destination
+      const redirectTo = sessionStorage.getItem('redirectAfterLogin');
+      if (redirectTo) {
+        sessionStorage.removeItem('redirectAfterLogin');
+        window.location.href = redirectTo;
+      } else {
+        window.location.href = '/portal';
+      }
     } catch (error: any) {
       setServerError(error.message);
       toast.error(error.message || 'Login failed. Please check your credentials.');
@@ -46,7 +59,7 @@ if (role === 'admin') {
   };
 
   return (
-    <div className="min-h-screen bg-white bg-whitenpm run dev from-primary-700 to-primary-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <Toaster />
 
       <div className="w-full max-w-sm">
