@@ -114,6 +114,8 @@ export default function Navbar() {
             <NavLink href="/form-2290" onClick={closeMenu}>Form 2290</NavLink>
             <NavLink href="/industries" onClick={closeMenu}>Industries</NavLink>
             <NavLink href="/pricing" onClick={closeMenu}>Pricing</NavLink>
+                        <NavLink href="/contact">Contact Us</NavLink>
+
             <NavLink href="/about" onClick={closeMenu}>About</NavLink>
             <div className="pt-4 space-y-2">
               {isLoggedIn ? (
@@ -125,29 +127,29 @@ export default function Navbar() {
                   >
                     My Portal
                   </Link>
-                  <button
+                  {/* <button
                     onClick={handleLogout}
                     className="block w-full px-4 py-2 bg-red-600 text-white rounded text-center"
                   >
                     Logout
-                  </button>
+                  </button> */}
                 </>
               ) : (
                 <>
-                  <Link
+                  {/* <Link
                     href="/login"
                     onClick={closeMenu}
                     className="block px-4 py-2 text-white border border-white/30 rounded text-center hover:bg-white/10"
                   >
                     Login
-                  </Link>
-                  <Link
+                  </Link> */}
+                  {/* <Link
                     href="/register"
                     onClick={closeMenu}
                     className="block px-4 py-2 bg-primary-700 text-white rounded text-center"
                   >
                     Register
-                  </Link>
+                  </Link> */}
                 </>
               )}
             </div>
